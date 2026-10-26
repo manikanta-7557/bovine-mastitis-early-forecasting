@@ -45,9 +45,11 @@ N_FOLDS = 5          # 5 folds -> each fold ~20% of cows
 TEST_FOLD = 0        # fold 0 is the held-out test set; folds 1-4 = train
                      # (the `fold` column is also reusable for grouped 5-fold CV later)
 
-# Quadrant -> (inner sensor, external sensor). F/R = front/rear, L/R = left/right.
-# (Assumption: I* and E* are two sensor channels per quadrant; confirm exact
-#  meaning against the Mendeley data description before writing the paper.)
+# Quadrant -> (inhale-limit column, exhale-limit column). F/R = front/rear, L/R = left/right.
+# Source: the Mendeley dataset page lists udder size as the "inhale and exhale limit" of each of
+# the 4 quarters (4 x 2 = 8 columns). It does not define the column names, but the letters match:
+# I* = inhale limit, E* = exhale limit (very likely; not stated explicitly).
+# Code keeps the neutral names "first"/"second" of each pair; the sum of the pair is used below.
 QUADRANTS = {
     "FL": ("IUFL", "EUFL"),
     "FR": ("IUFR", "EUFR"),
@@ -158,8 +160,8 @@ def audit_cows(df: pd.DataFrame) -> dict:
     if audit["label_constant_per_cow"]:
         log.warning("Label is CONSTANT within every cow -> Day 1-6 are repeated "
                     "measurements of one status, not an onset trajectory. Frame the "
-                    "task as early DETECTION without clinical signs, not time-ahead "
-                    "forecasting, unless you can justify otherwise.")
+                    "task as DETECTION of existing (clinical) mastitis from measurements, not "
+                    "early detection or time-ahead forecasting, unless you can justify it.")
     else:
         log.info("%d cows change label across days -> temporal/lag features are possible.",
                  audit["cows_whose_label_changes_across_days"])
@@ -198,7 +200,7 @@ def add_indices(df: pd.DataFrame) -> pd.DataFrame:
     """
     Udder Swelling Index  = mean of all 8 sensor readings  (overall 'size/fullness')
     Udder Asymmetry Index = (max - min) / mean of the 4 quadrant totals
-        quadrant total Q_k = inner_k + external_k
+        quadrant total Q_k = I*_k + E*_k   (inhale limit + exhale limit of quarter k)
     Intuition: mastitis usually hits ONE quarter. That quarter swells, the others
     don't, so the spread between the biggest and smallest quarter (relative to the
     udder average) jumps. Dividing by the mean makes it scale-free across cows.
