@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "status": "verified-source-defaults; descriptive-only; scripts do not currently load this file",
+  "dataset": {
+    "working_path": "data/raw/clinical_mastitis_cows.csv",
+    "version": "unresolved",
+    "version1_reference_path": "data/raw/clinical_mastitis_cows_version1.csv",
+    "version2_archive_path": null,
+    "version2_match_verified": false,
+    "working_file_sha256_at_2026-10-30_audit": "e4166166bf83d91a63a62d1ab5e8bd66f9f7ce6687233a67abc4d99918f532d8",
+    "target_column": "class1",
+    "group_column": "Cow_ID"
+  },
+  "preprocessing": {
+    "random_seed": 42,
+    "split_method": "StratifiedGroupKFold",
+    "number_of_folds": 5,
+    "held_out_test_fold": 0,
+    "validation_fold_within_training": 1,
+    "excluded_predictor_columns": [
+      "Milk_visibility",
+      "Previous_Mastits_status",
+      "class1",
+      "Cow_ID",
+      "Day"
+    ],
+    "continuous_scaling": {
+      "method": "MinMaxScaler",
+      "fit_scope": "training rows only",
+      "clip_to_unit_interval": true,
+      "scaled_columns": [
+        "swelling_index_raw",
+        "asymmetry_index_raw",
+        "temperature",
+        "months_pp"
+      ]
+    },
+    "breed_encoding": {
+      "Jersey": 0,
+      "Holstein": 1
+    }
+  },
+  "feature_sets": {
+    "Early-Warning": [
+      "swelling_index",
+      "asymmetry_index",
+      "temperature_n",
+      "months_pp_n",
+      "breed_enc"
+    ],
+    "Full-Clinical": [
+      "swelling_index",
+      "asymmetry_index",
+      "temperature_n",
+      "months_pp_n",
+      "breed_enc",
+      "hardness",
+      "pain"
+    ],
+    "raw_sensor_comparison": {
+      "features": [
+        "IUFL",
+        "EUFL",
+        "IUFR",
+        "EUFR",
+        "IURL",
+        "EURL",
+        "IURR",
+        "EURR",
+        "temperature",
+        "months_pp",
+        "breed_enc"
+      ],
+      "status": "planned; not implemented in the current training scripts"
+    }
+  },
+  "baselines": {
+    "majority_class": {
+      "strategy": "prior"
+    },
+    "logistic_regression": {
+      "max_iter": 1000,
+      "random_state": 42
+    },
+    "decision_tree": {
+      "max_depth": 4,
+      "random_state": 42
+    },
+    "random_forest": {
+      "n_estimators": 300,
+      "random_state": 42,
+      "n_jobs": -1
+    },
+    "hyperparameter_search": "none in baselines.py; these are fixed source defaults"
+  },
+  "anfis": {
+    "validation_radius_grid": [
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7
+    ],
+    "max_rules": 12,
+    "validation_fold": 1,
+    "max_epochs": 100,
+    "learning_rate": 0.01,
+    "optimizer": "adam",
+    "early_stopping_patience": 15,
+    "ridge": 0.001,
+    "minimum_sigma": 0.01,
+    "cluster_rb_factor": 1.5,
+    "cluster_accept_ratio": 0.5,
+    "cluster_reject_ratio": 0.15,
+    "cluster_uses_training_labels_for_initial_centres": true,
+    "selected_radius_by_feature_set": {
+      "Early-Warning": 0.4,
+      "Full-Clinical": 0.4
+    },
+    "selected_values_source": "reports/anfis_results.csv; retrospective record of current artifact"
+  },
+  "evaluation": {
+    "decision_threshold": 0.5,
+    "row_metrics": [
+      "accuracy",
+      "precision",
+      "recall",
+      "specificity",
+      "f1",
+      "roc_auc"
+    ],
+    "cow_aggregation": "mean daily score per cow; majority label with >= 0.5 mapped to class 1",
+    "bootstrap": {
+      "unit": "cow",
+      "replicates": 1000,
+      "random_seed": 42,
+      "reported_current_intervals": "row-level F1 and ROC-AUC confidence intervals"
+    }
+  },
+  "outputs": {
+    "processed_data": "data/processed/",
+    "baseline_metrics": "reports/baseline_results.csv",
+    "anfis_metrics": "reports/anfis_results.csv",
+    "comparison": "reports/comparison.csv",
+    "anfis_radius_validation": "reports/anfis_ra_grid.csv",
+    "models": "models/",
+    "rules_and_explanations": "reports/"
+  },
+  "unresolved": {
+    "official_version2_archive_available_locally": false,
+    "source_commit_for_historical_artifacts": null,
+    "historical_environment_for_pipeline_run": null,
+    "central_config_consumed_by_scripts": false,
+    "raw_sensor_comparison_results": null
+  }
+}

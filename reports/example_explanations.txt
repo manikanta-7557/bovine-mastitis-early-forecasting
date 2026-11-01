@@ -1,0 +1,123 @@
+[Early-Warning] highest-risk test row (cow cow989, true label 0)
+{
+  "score": 1.411,
+  "tier": "High",
+  "tier_memberships": {
+    "Low": 0.0,
+    "Watch": 0.0,
+    "High": 1.0
+  },
+  "top_rules": [
+    {
+      "rule": 1,
+      "firing_share": 0.796,
+      "rule_output": 1.771,
+      "text": "IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO THEN risk ~ 0.09"
+    },
+    {
+      "rule": 7,
+      "firing_share": 0.204,
+      "rule_output": 0.01,
+      "text": "IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO THEN risk ~ 1.00"
+    },
+    {
+      "rule": 9,
+      "firing_share": 0.0,
+      "rule_output": 0.369,
+      "text": "IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is HIGH AND months_pp_n is LOW AND breed_enc is NO THEN risk ~ 0.38"
+    }
+  ]
+}
+
+[Early-Warning] lowest-risk test row (cow cow44, true label 0)
+{
+  "score": -0.248,
+  "tier": "Low",
+  "tier_memberships": {
+    "Low": 1.0,
+    "Watch": 0.0,
+    "High": 0.0
+  },
+  "top_rules": [
+    {
+      "rule": 1,
+      "firing_share": 0.733,
+      "rule_output": -0.454,
+      "text": "IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO THEN risk ~ 0.09"
+    },
+    {
+      "rule": 3,
+      "firing_share": 0.201,
+      "rule_output": 0.448,
+      "text": "IF swelling_index is MEDIUM AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO THEN risk ~ -0.52"
+    },
+    {
+      "rule": 5,
+      "firing_share": 0.065,
+      "rule_output": -0.092,
+      "text": "IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is LOW AND breed_enc is NO THEN risk ~ -0.06"
+    }
+  ]
+}
+
+[Full-Clinical] highest-risk test row (cow cow4, true label 0)
+{
+  "score": 1.86,
+  "tier": "High",
+  "tier_memberships": {
+    "Low": 0.0,
+    "Watch": 0.0,
+    "High": 1.0
+  },
+  "top_rules": [
+    {
+      "rule": 3,
+      "firing_share": 0.565,
+      "rule_output": 1.04,
+      "text": "IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.23"
+    },
+    {
+      "rule": 1,
+      "firing_share": 0.388,
+      "rule_output": 3.268,
+      "text": "IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is HIGH AND months_pp_n is LOW AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.86"
+    },
+    {
+      "rule": 2,
+      "firing_share": 0.047,
+      "rule_output": 0.099,
+      "text": "IF swelling_index is LOW AND asymmetry_index is LOW AND temperature_n is HIGH AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ -0.39"
+    }
+  ]
+}
+
+[Full-Clinical] lowest-risk test row (cow cow1004, true label 0)
+{
+  "score": -0.088,
+  "tier": "Low",
+  "tier_memberships": {
+    "Low": 1.0,
+    "Watch": 0.0,
+    "High": 0.0
+  },
+  "top_rules": [
+    {
+      "rule": 4,
+      "firing_share": 0.778,
+      "rule_output": -0.127,
+      "text": "IF swelling_index is LOW AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is LOW AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.29"
+    },
+    {
+      "rule": 2,
+      "firing_share": 0.22,
+      "rule_output": 0.034,
+      "text": "IF swelling_index is LOW AND asymmetry_index is LOW AND temperature_n is HIGH AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ -0.39"
+    },
+    {
+      "rule": 3,
+      "firing_share": 0.001,
+      "rule_output": 1.691,
+      "text": "IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.23"
+    }
+  ]
+}

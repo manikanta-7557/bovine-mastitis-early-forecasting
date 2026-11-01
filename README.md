@@ -31,8 +31,8 @@ raw CSV -> data_prep.py (drop leakage, cow-grouped split, 2 indices, train-only 
 ## Where to read next
 
 1. `docs/HANDOFF.md` - every design decision, its reason, and open issues (read before touching code).
-2. `TASKS.md` - who is doing what, with dates.
-3. `JOURNAL.md` - research journal; add an entry every session.
+2. `docs/TASKS.md` - who is doing what, with dates.
+3. `docs/JOURNAL.md` - research journal; add an entry every session.
 
 ## Team workflow
 

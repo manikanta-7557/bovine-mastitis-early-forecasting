@@ -13,7 +13,7 @@ Usage:
 What to do with the output:
   * Run it on BOTH partners' machines. The SHA256 line must be identical.
   * Download the Version 1 CSV (small) from https://data.mendeley.com/datasets/kbvcdw5b4m and compare.
-  * Write the result in JOURNAL.md (which version, SHA256).
+  * Write the result in docs/JOURNAL.md (which version, SHA256).
 """
 import hashlib
 import os

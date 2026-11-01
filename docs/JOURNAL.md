@@ -1,0 +1,30 @@
+# Research journal
+
+Add an entry every session: date, who, what you did, what you learned, what is next. Newest at the bottom. This is viva evidence.
+
+## 2026-10-07 - A
+- Ran `data_prep.py` on the real CSV (6600 rows x 18 cols, 1100 cows x 6 days).
+- Found: `Milk_visibility` is identical to `class1` (r = 1.0), so it is the target; dropped.
+- Cow-grouped split: 880 train cows / 220 test cows, zero overlap; mastitis fraction 0.3941 train / 0.4227 test.
+- Label is constant within 1099 of 1100 cows. One cow changes. Single-rule accuracy: Hardness 0.8718, Pain 0.7729.
+- Next: baselines.
+
+## 2026-10-14 - A
+- Received `baselines.py` and `metrics.py` (row-level and cow-level metrics, cow-bootstrap CIs). Results not yet recorded.
+
+## 2026-10-22 - A
+- Received Modules 3-5 (`subtractive_clustering.py`, `anfis.py`, `explain.py`, `train_anfis.py`, `test_modules.py`); unit tests and a synthetic-data dry run passed. Not yet run on real data.
+
+## 2026-10-24 - A
+- Set up the shared repo with B. Review II is on Tuesday 2026-10-27.
+- Next: run all scripts on both machines and compare numbers.
+
+## 2026-10-30 - Copilot-assisted audit
+- Inventoried the current worktree and recorded SHA-256/byte sizes for raw, processed, model and headline report artifacts in `docs/2026-10-30_phase2_audit.md`; no existing artifacts were copied or overwritten in this audit.
+- Compared the working CSV with the available Version 1 CSV: they differ; no authentic Version 2 archive was found locally, so provenance remains unresolved.
+- Audited cow10 without changing/removing it; found no duplicate full rows or duplicate cow/day keys.
+- Added descriptive verified-defaults config, claims register, run log and a proposed grouped-CV feature-set experiment specification. The existing scripts do not yet read `config.json`; the next action is to obtain and authenticate the official Version 2 archive before starting new experiments.
+
+## 2026-11-01 - Copilot-assisted documentation cleanup
+- Consolidated project Markdown documentation, audit notes and run log into `docs/`; retained root `README.md` and `.github/pull_request_template.md` in their GitHub-required locations.
+- Updated documentation and helper references to the new paths. No data, model or experiment outputs were changed.

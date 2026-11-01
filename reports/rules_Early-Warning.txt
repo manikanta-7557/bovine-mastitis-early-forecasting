@@ -1,0 +1,10 @@
+Rule 1: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO THEN risk ~ 0.09
+Rule 2: IF swelling_index is LOW AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is HIGH AND breed_enc is NO THEN risk ~ -0.26
+Rule 3: IF swelling_index is MEDIUM AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO THEN risk ~ -0.52
+Rule 4: IF swelling_index is LOW AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is LOW AND breed_enc is NO THEN risk ~ -0.05
+Rule 5: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is LOW AND breed_enc is NO THEN risk ~ -0.06
+Rule 6: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is HIGH AND months_pp_n is HIGH AND breed_enc is NO THEN risk ~ 0.84
+Rule 7: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO THEN risk ~ 1.00
+Rule 8: IF swelling_index is LOW AND asymmetry_index is LOW AND temperature_n is LOW AND months_pp_n is HIGH AND breed_enc is NO THEN risk ~ -4.59
+Rule 9: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is HIGH AND months_pp_n is LOW AND breed_enc is NO THEN risk ~ 0.38
+Rule 10: IF swelling_index is MEDIUM AND asymmetry_index is HIGH AND temperature_n is MEDIUM AND months_pp_n is LOW AND breed_enc is NO THEN risk ~ 0.79

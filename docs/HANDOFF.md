@@ -69,7 +69,7 @@ Real-data numbers so far: 1100 cows x 6 days; split train mastitis fraction 0.39
 ## 7. Working agreement (two people)
 
 - Git: `main` is always runnable. Work on branches `feat/<module>-<name>`, merge by PR/self-review, small commits (`data: ...`, `anfis: ...`). Tag `review2` at submission.
-- Research journal: append to `JOURNAL.md` every session (date, what you did, what you learned, what is next). Evidence for the viva.
+- Research journal: append to `docs/JOURNAL.md` every session (date, what you did, what you learned, what is next). Evidence for the viva.
 - Nobody merges code they cannot explain. Before merging, explain it to the other person for 5 minutes.
 - Numbers go into slides only from `reports/*.csv` / `data_prep_summary.json`.
 
