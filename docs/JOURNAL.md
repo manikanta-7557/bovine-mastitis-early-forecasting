@@ -48,6 +48,14 @@ Add an entry every session: date, who, what you did, what you learned, what is n
 - Added the isolated computer-generated seven-day onset study, saved model, and supporting data without changing the existing R8/R13 detection models or clinical data.
 - Integrated the new app section, per-day plot, explanation/report support, and auxiliary detection metrics while retaining the 15-page demo and current visual styling.
 - Ran the model, dashboard, report, and scenario tests; all passed. Generated auxiliary detection metrics and verified the detection example, synthetic study section, and supplemental metrics panel in the browser.
+
+## 2026-11-03 - Copilot-assisted React and FastAPI application
+- Added a Vite/React/TypeScript interface and FastAPI endpoints that call the existing R8/R13 inference, explanation, FC7 study, report, and saved-results modules rather than reimplementing model logic.
+- Built seven connected screens, dynamic model feature/range forms, actual-rule explanations, a trajectory over observed eligible generated-data rows, report download, and methodology/limitations views. Kept the Streamlit source and existing model/data/result artifacts.
+- Added API tests for both clinical configurations, range clipping, validation, explanations, missing artifacts, generated-study scoring, saved results, and PDF creation. The complete model, dashboard, report, study, and API test suite passed; the TypeScript production build passed.
+- Visually checked the seven navigation screens and an end-to-end clinical input, explanation, generated-data observation, evaluation table, and PDF action in the local browser.
+- Follow-up browser check confirmed the selected Day 89 FC7 result contains only its 14 latest observed history rows through that day, shows no future observations, and expands five model-derived IF–THEN rules.
+- Next: teammate review of `feature/ui-v3-integration`.
 - Next: review the integrated branch and commit.
 
 ## 2026-11-03 - Copilot-assisted research dashboard redesign

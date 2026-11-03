@@ -190,14 +190,19 @@ def build_report(an: dict, meta: dict | None = None) -> list:
     when = meta.get("when") or datetime.now().strftime("%d %b %Y, %H:%M")
     n = an["narrative"]; rules = an["rules"]; cols = an["cols"]
     fc = an.get("task") == "forecast"; DIS = DISCLAIMER_FC if fc else DISCLAIMER
-    B = [("h1", "Synthetic 7-day onset scenario explanation" if fc else "Detailed model explanation for veterinary review"),
+    B = [("h1", "Interpretable ANFIS for Detection of Existing Clinical Bovine Mastitis"),
+         ("p", "Synthetic 7-day onset scenario explanation" if fc else "Detailed model explanation for veterinary review"),
          ("note", DIS),
          ("kv", [("Model", f"{an['bundle_mode']} ANFIS ({an['key']}), {an['out']['n_rules']} learned rules"), ("Generated", when)]
           + ([("Question answered", "Will clinical mastitis start within the next 7 days? (synthetic data)")] if fc else [])
           + ([("Case", meta["case"])] if meta.get("case") else []))]
+    if not fc:
+        B.append(("p", "This report covers existing clinical-status detection with the selected R8/R13 model. It does not include the separate FC7 computer-generated onset study; those study results are not real-farm validation."))
     B += [("h2", "1. Cow measurements" + (" used (change from the cow's own recent baseline)" if fc else " entered")),
-          ("table", ["Measurement", "Meaning", "Value", "Training range"],
-           [[m["feature"], m["meaning"], f"{m['entered']:g}", f"{m['lo']:g} to {m['hi']:g}"] for m in an["measurements"]])]
+          ("p", "Range the model learned from (lowest to highest). Cows in the training data had values in this range. A value outside it is adjusted to the nearest supported limit and flagged because the model has not seen such values during training."),
+          ("table", ["Measurement", "Meaning", "Entered value", "Value used by model", "Range the model learned from (lowest to highest)", "Range status"],
+           [[m["feature"], m["meaning"], f"{m['entered']:g}", f"{m['seen']:g}", f"{m['lo']:g} to {m['hi']:g}",
+             "Inside learned range" if m["in_range"] else "Outside range - adjusted"] for m in an["measurements"]])]
     B += [("h2", "2. Model result and score"),
           ("table", ["Item", "Value"],
            [["Raw model score", f"{an['score']:.3f}"], ["Displayed score (clipped to 0-1)", f"{an['score_clipped']:.3f}"],
@@ -274,7 +279,7 @@ def _e(s) -> str:
     return _html.escape(str(s))
 
 
-def report_html(blocks: list, title: str = "ANFIS veterinary explanation") -> str:
+def report_html(blocks: list, title: str = "Interpretable ANFIS for Detection of Existing Clinical Bovine Mastitis") -> str:
     parts = []
     for b in blocks:
         k = b[0]

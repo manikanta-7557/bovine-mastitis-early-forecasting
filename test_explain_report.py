@@ -23,6 +23,10 @@ for mode in app_core.MODES:
         heads = [x[1] for x in blocks if x[0] == "h2"]; assert len(heads) == 11 and heads[0].startswith("1.") and heads[-1].startswith("11."), heads
         low = html.lower(); assert not any(w in low for w in BANNED), [w for w in BANNED if w in low]
         assert "not a calibrated clinical probability" in low and "research prototype" in low
+        assert "Interpretable ANFIS for Detection of Existing Clinical Bovine Mastitis" in html
+        assert "Range the model learned from (lowest to highest)" in html
+        assert "Cows in the training data had values in this range." in html
+        assert "does not include the separate FC7 computer-generated onset study" in html
         pdf = er.report_pdf(blocks); assert pdf is None or pdf[:5] == b"%PDF-"
     print(f"OK  {mode}: 3 examples, contributions sum to score, membership product = firing strength, report + PDF built")
 b = app_core.load("Sensor-only"); cols = b["cols"]; ex = app_core.pick_examples(b, df)

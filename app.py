@@ -108,9 +108,13 @@ def show_analysis(an, meta=None):
 
     st.subheader("B. Input measurement analysis")
     st.caption(f"Comparison with the dominant rule (Rule {an['dominant']}) and with the closest rule per measurement. Membership 1 = at the rule centre. No clinical reference ranges are implied.")
-    st.dataframe(pd.DataFrame([{"Measurement": m["feature"], "Entered": m["entered"], "Training range": f"{m['lo']:g} to {m['hi']:g}" + ("" if m["in_range"] else "  (OUTSIDE: clipped)"),
+    st.dataframe(pd.DataFrame([{"Measurement": m["feature"], "Entered value": m["entered"],
+                                "Range the model learned from (lowest to highest)": f"{m['lo']:g} to {m['hi']:g}",
+                                "Range status": "Inside learned range" if m["in_range"] else "Outside range — adjusted",
+                                "Value used by model": m["seen"],
                                 f"Rule {an['dominant']} centre": er._n(m["dom_centre"]), "Difference": er._n(m["dom_diff"]), "Membership": round(m["dom_mu"], 2),
                                 "Closest rule": m["best_rule"], "Its centre": er._n(m["best_centre"]), "Its membership": round(m["best_mu"], 2)} for m in an["measurements"]]), hide_index=True)
+    st.caption("Cows in the training data had values in this range. A value outside it is adjusted to the nearest supported limit and flagged because the model has not seen such values during training.")
     with st.expander("Membership of every measurement in every rule"):
         st.dataframe(pd.DataFrame(an["mu"].round(3), columns=an["cols"], index=[f"Rule {i + 1}" for i in range(len(an["mu"]))]))
 

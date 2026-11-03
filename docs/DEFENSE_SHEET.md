@@ -16,8 +16,22 @@ Numbers are from `reports/final/` (grouped 5-fold, 1,100 cows). Say "in our expe
 **13. Why did the engineered features do worse?** Averaging eight sensors and one max-min ratio discard which quarter is swollen. Raw sensors keep it; rules in raw units show one swollen quarter per rule.
 **14. Why two dataset versions, and which is right?** The authors do not document the difference (1,529 labels). We use 3,961 / 2,639, the split both published studies report, and treat Version 1 as a sensitivity check. [Say "verified" for provenance only after the hash check.]
 **15. Is it a clinical tool?** No. It detects existing clinical mastitis in this dataset; no external farm validation; thresholds not clinically validated; the dashboard is a prototype.
-**16. Can it forecast?** No. Labels are nearly constant within a cow; any forecast claim is unsupported.
+**16. Does the real clinical dataset support future-onset claims?** No. Labels are nearly constant within a cow and the histories are short, so the real dataset supports the existing-status detection task, not a future-onset claim. The separate FC7 screen is a computer-generated software study only, not real-animal evidence.
 **17. Duplicated rows?** 28% of test rows are exact copies of training rows from other cows even under cow-grouping; unexplained, listed as a limitation.
 **18. What would you do next?** External farm data, calibrated thresholds, veterinarian review of the rules, contact with the dataset authors about the duplicates and versions.
 **19. What did your teammate contribute?** Streamlit prototype and model upload (Madhur Sathya); his stored models were replaced by models trained on our pipeline after we found they did not match the reported results.
 **20. How do I know your numbers are reproducible?** Fixed seed, scripts in the repo, `reports/final` outputs, tests, and the run log; rerunning gives the same pooled table.
+
+## Application workflow questions
+
+**21. Why use the real clinical dataset for detection rather than future-onset prediction?** Its short daily series and nearly constant within-cow labels support an existing-status detection task, but do not establish that sensor readings precede a new onset. The working CSV's provenance is also unresolved, so we keep conclusions scoped to the saved grouped evaluation.
+
+**22. Why include a separate generated-data onset study?** The FC7 experiment is a reproducible software demonstration of the temporal pipeline using computer-generated daily rows. It is not evidence that the method works on real animals or farms, and its metrics must remain separate from clinical detection results.
+
+**23. Why exclude `Milk_visibility`?** In the working dataset it duplicates `class1`, the target. Using it as an input would expose the answer to the model rather than test detection from independent measurements.
+
+**24. Why may ANFIS be selected when Random Forest has higher F1?** The project investigates whether a compact set of learned fuzzy rules can provide inspectable model reasoning. This is an interpretability trade-off, not a claim that ANFIS is more accurate; the actual comparison is in the saved result files.
+
+**25. What does the learned-range warning mean?** Each scaler stores the lowest and highest training values for every feature. Inference preserves the existing behavior: an out-of-range value is clipped to the nearest learned limit, and the interface shows the entered and adjusted values. This is a model-support warning, not a clinical reference range.
+
+**26. Why are synthetic onset metrics not farm validation?** The study data are computer-generated, not real farm records. Grouped evaluation and a saved model make the experiment reproducible, but cannot establish performance, calibration, or clinical utility on real animals.

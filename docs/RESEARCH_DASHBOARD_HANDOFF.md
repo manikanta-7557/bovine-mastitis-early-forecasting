@@ -27,3 +27,11 @@ The Streamlit CLI was not on `PATH`; `python -m streamlit run app.py --server.he
 ## Git
 
 The dashboard update is based on integration checkpoint `591de9da2efbcadb29ec0944baa69735b3f21795` (`feat: integrate UI v3 with synthetic onset study`). Commit and push status is reflected in the branch history and remote.
+
+## React/FastAPI application update
+
+The branch now also contains a React/TypeScript/Vite interface and a FastAPI adapter over the existing Python source of truth. The seven screens are Overview, Clinical detection, Fuzzy reasoning, Synthetic onset study, Model evaluation, Reports, and Methodology. The Streamlit application remains in place for compatibility.
+
+`api.py` exposes health, model schema, prediction, explanation, synthetic-study, saved-results, and PDF-report endpoints. Clinical calls use `app_core.py`; study calls use `forecast_core.py` and `forecast_study.py`; explanations and PDFs use `explain_report.py`. Evaluation panels load saved CSVs and do not embed metric values. The front end only charts observed eligible generated-study scores and reports the limitation that these data are not real farm validation.
+
+`python serve.py` builds the frontend if needed and serves it with the API at `http://127.0.0.1:8000`. `docs/UI_DESIGN_AUDIT.md` records that the named Alpha screen sources were unavailable and distinguishes general design patterns from rejected model/data reuse. Detailed run commands and actual validation output are in `reports/RUNLOG.md` after the implementation test run.
