@@ -53,3 +53,29 @@ def membership_curves(bundle, j, entered=None):
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
     fig.tight_layout(); return fig
+
+
+def forecast_trajectory(traj, thr, day=None):
+    """Plot daily synthetic scenario scores, threshold, generated onset, and selected day."""
+    fig, ax = plt.subplots(figsize=(7.2, 2.9))
+    ax.plot(traj.day_index, traj.score, color=G, lw=1.8, label="scenario score (7-day onset)")
+    ax.axhline(thr, color=AMB, ls="--", lw=1, label=f"alert threshold {thr:.2f}")
+    al = traj[traj.alert]; ax.scatter(al.day_index, al.score, color=AMB, s=14, zorder=3, label="alert")
+    on = traj.onset_day.iloc[0] if len(traj) else np.nan
+    if not np.isnan(on):
+        ax.axvline(on, color="#c0504d", lw=1.4); ax.text(on, ax.get_ylim()[1], " generated clinical onset", color="#c0504d", fontsize=8, va="top", ha="right")
+    if day is not None:
+        ax.axvline(day, color="#33433b", ls=":", lw=1); ax.text(day, ax.get_ylim()[0], "selected", fontsize=8, ha="center", va="bottom")
+    ax.set_xlabel("study day"); ax.set_ylabel("score"); ax.legend(fontsize=7, frameon=False, loc="upper left", ncol=3)
+    for s in ("top", "right"):
+        ax.spines[s].set_visible(False)
+    fig.tight_layout(); return fig
+
+
+def forecast_results(summ, target, metric="PR_AUC"):
+    """Plot synthetic study metrics for history-based D8 and current-value C8 features."""
+    p = summ[summ.target == target].pivot(index="model", columns="feature_set", values=metric).sort_values("D8")
+    fig, ax = plt.subplots(figsize=(5.2, 3.2)); y = np.arange(len(p))
+    ax.barh(y + .2, p["D8"], .38, color=G, label="with own 14-day history (D8)"); ax.barh(y - .2, p["C8"], .38, color=GREY, label="today's values only (C8)")
+    ax.set_yticks(y); ax.set_yticklabels(p.index); ax.set_title(f"{metric.replace('_', '-')} on synthetic data, {target.split('_')[-1]} target", fontsize=10, loc="left")
+    ax.legend(fontsize=7, frameon=False, loc="lower right"); _clean(ax); fig.tight_layout(); return fig

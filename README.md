@@ -1,7 +1,7 @@
-# Interpretable ANFIS for Early Bovine Mastitis Detection
+# Interpretable ANFIS for Detection of Existing Clinical Bovine Mastitis
 
 Soft Computing project (M.Tech, VIT-AP). Problem statement SIH26109.
-Idea: detect mastitis from udder sensor readings with a **rule-based, explainable** ANFIS and compare it with black-box ML.
+Goal: detect existing clinical mastitis from udder sensor readings with a **rule-based, explainable** ANFIS and compare it with other ML methods.
 
 ## Quick start (new collaborator: 15 minutes)
 
@@ -27,6 +27,19 @@ raw CSV -> data_prep.py (drop leakage, cow-grouped split, 2 indices, train-only 
         -> subtractive_clustering.py (rules from data) -> anfis.py (hybrid learning) -> explain.py
                                                                    /  compared in reports/comparison.csv
 ```
+
+## Synthetic onset scenario
+
+The app also includes a separate seven-day onset demonstration using the computer-generated data under `data/external/Synthetic_Data_for_Mastitis_Disease/`. This is not real-animal or farm evidence and does not change the project's primary task: detection of existing clinical mastitis.
+
+```bash
+python test_app_core.py
+python test_explain_report.py
+python test_forecast.py
+streamlit run app.py
+```
+
+Choose **Synthetic onset study** in the app to inspect held-out study animals, the per-day score plot, rule explanation, and the synthetic-study results. The scenario modules and model use separate `forecast_*` files and `FC7` artifacts; they do not replace the R8 or R13 detection models. `requirements.txt` already includes the UI and PDF dependencies.
 
 ## Where to read next
 

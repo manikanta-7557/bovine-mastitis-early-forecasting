@@ -1,0 +1,38 @@
+{
+  "features": [
+    "D_milk_conductivity_ms_cm",
+    "D_milk_ph",
+    "D_milk_yield_l",
+    "D_milk_lactose_pct",
+    "D_body_temp_c",
+    "D_udder_surface_temp_c",
+    "D_rumination_min",
+    "D_activity_steps"
+  ],
+  "data_min": [
+    -0.878571428571429,
+    -0.21357142857142897,
+    -3.924285714285716,
+    -0.4378571428571423,
+    -0.576666666666668,
+    -1.25,
+    -210.0,
+    -1446.2307692307695
+  ],
+  "data_max": [
+    1.5264285714285712,
+    0.3592857142857149,
+    1.7942857142857171,
+    0.281428571428572,
+    1.0,
+    1.5357142857142776,
+    117.64285714285717,
+    1262.1999999999998
+  ],
+  "alert_threshold": 0.7300313674331215,
+  "task": "forecast",
+  "horizon_days": 7,
+  "synthetic": true,
+  "target": "clinical_within_7d",
+  "baseline_window_days": 14
+}

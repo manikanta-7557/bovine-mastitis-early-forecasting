@@ -63,7 +63,7 @@ def p1(c):
                 "Finding affected cows reliably, and explaining why a cow was flagged, supports the veterinarian's decision.")
     st.markdown("**Objective.** Build a model that takes eight udder-sensor measurements and reports (1) a detection score and (2) the fuzzy rules behind it, so a human can check the reasoning.")
     st.markdown("**Source of the problem.** Smart India Hackathon problem statement SIH26109.")
-    ui.callout("<b>Detection, not forecasting.</b> The model recognises existing clinical mastitis in the measurements it is given. It does not predict whether a cow will become ill later.")
+    ui.callout("<b>Scope.</b> The primary model detects existing clinical mastitis from the measurements it receives. The separate onset section is an isolated demonstration on computer-generated data, not evidence about real animals.")
 
 
 def p_flow(c):
@@ -261,8 +261,28 @@ def p9(c):
     s5 = f["s5_anfis"]
     if s5:
         st.markdown(f"**Feature design matters.** With two engineered indices instead of the eight raw sensors, ANFIS F1 falls to {s5['F1']:.3f} (AUC {s5['AUC']:.3f}), so the app uses the raw sensors.")
+    xm = F_extra(c)
+    if xm is not None:
+        st.markdown("**Additional metrics:** PR-AUC and Brier score with cow-bootstrap confidence intervals. Brier is shown as a score diagnostic, not as evidence that ANFIS scores are calibrated probabilities.")
+        t2 = xm[xm.model != "Majority"]
+        st.dataframe(pd.DataFrame({"Model": t2.model, "PR-AUC (95% CI)": [f"{r.PR_AUC:.3f} ({r.PR_lo:.3f} to {r.PR_hi:.3f})" for r in t2.itertuples()],
+                                   "Brier (95% CI)": [f"{r.Brier:.3f} ({r.Brier_lo:.3f} to {r.Brier_hi:.3f})" for r in t2.itertuples()]}), hide_index=True)
+        cal = _read("reports/final/calibration_ANFIS_R8.csv", c)
+        if cal is not None:
+            mid = cal[(cal.mean_score > 0.45) & (cal.mean_score < 0.65)]
+            st.caption("Score calibration check: ANFIS outputs are not probabilities. "
+                       + "; ".join(f"rows scored about {r.mean_score:.2f} were mastitis {r.observed_rate:.0%} of the time" for r in mid.itertuples()))
     st.markdown("**Limitations.** One dataset; no external farm validation; p-values uncorrected; 28% of test rows are exact copies of training rows even with cow-grouping (unexplained).")
     st.caption("Source: reports/final/summary_pooled.csv, anfis_vs_baselines.csv, anfis_rules_per_fold.csv, fold0_results.csv.")
+
+
+def _read(rel, c):
+    p = c["root"] / rel
+    return pd.read_csv(p) if p.exists() else None
+
+
+def F_extra(c):
+    return _read("reports/final/extra_metrics_R8.csv", c)
 
 
 def _example(c, key):

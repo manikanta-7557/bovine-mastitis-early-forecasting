@@ -41,13 +41,19 @@ SENSOR_MEANING = {  # the dataset page does not name the columns; I = inhale lim
     "temperature": "Temperature (dataset scale; unit not documented)", "months_pp": "Months after calving",
     "breed_enc": "Breed (0 = Jersey, 1 = Holstein)", "hardness": "Udder hardness (0/1)", "pain": "Pain (0/1)",
 }
+_SIGNAL_NAMES = {"milk_conductivity_ms_cm": "Milk conductivity (mS/cm)", "milk_ph": "Milk pH", "milk_yield_l": "Milk yield (litres)", "milk_lactose_pct": "Milk lactose (%)",
+                 "body_temp_c": "Body temperature (C)", "udder_surface_temp_c": "Udder surface temperature (C)", "rumination_min": "Rumination (min/day)", "activity_steps": "Activity (steps/day)"}
+SENSOR_MEANING.update({f"D_{k}": f"{v}: today minus this cow's own mean of the previous 14 days" for k, v in _SIGNAL_NAMES.items()})
+DISCLAIMER_FC = ("Research prototype built on a SYNTHETIC (computer-generated) farm dataset to demonstrate a seven-day clinical-onset scenario. "
+                 "Nothing here has been validated on real animals or farms. It is not a diagnostic device or a substitute for veterinary examination. "
+                 "The score is a model output for that synthetic dataset, not a probability or clinical finding.")
 ACTIVE_SHARE = 0.05      # a rule is called "active" in the report when its firing share is at least 5% (presentation choice)
 NEGLIGIBLE = 5e-4        # contributions smaller than this print as 0.000 at 3 decimals
 THRESHOLD = 0.5          # the score cut used when the model is EVALUATED (F1); not a clinical cut-off
 
 DISCLAIMER = ("Research prototype from an academic soft-computing project. It is not a diagnostic device and not a "
               "substitute for veterinary examination. It detects patterns associated with existing clinical mastitis "
-              "in one research dataset; it does not forecast disease and has not been validated on farms.")
+              "in one research dataset and has not been validated on farms.")
 
 
 # --------------------------------------------------------------------------------------------- analysis
@@ -76,12 +82,21 @@ def analyse(bundle: dict, vals: dict, out: dict | None = None) -> dict:
                          dom_z=float(z[dom, j]), dom_mu=float(mu[dom, j]),
                          best_rule=best + 1, best_centre=float(centre[best, j]), best_diff=float(raw[j] - centre[best, j]),
                          best_mu=float(mu[best, j])))
-    an = dict(out=out, bundle_mode=bundle["mode"], key=bundle["key"], cols=cols, entered=raw, centre=centre, width=width, mu=mu, z=z,
+    task = bundle.get("task", "detection")
+    an = dict(task=task, alert_threshold=bundle.get("alert_threshold"), out=out, bundle_mode=bundle["mode"], key=bundle["key"], cols=cols, entered=raw, centre=centre, width=width, mu=mu, z=z,
               dominant=dom + 1, active=active, measurements=meas, rules=rules, score=out["score_unrounded"], clipped=out["clipped"],
               score_clipped=out["score_clipped"], tier=out["tier"], weak=out["max_raw_firing"] < LOW_MATCH,
               out_of_range=[mm["feature"] for mm in meas if not mm["in_range"]])
+    if task == "forecast":
+        an["tier"] = "Alert" if an["score"] >= an["alert_threshold"] else "No alert"
     an["narrative"] = narrate(an)
     return an
+
+
+def _n(v, signed=False):
+    """Number for display: 1 decimal for values of size >= 10 (sensor units), 3 significant digits for small values (deviations)."""
+    v = float(v); t = "%.1f" % v if abs(v) >= 10 else "%.3g" % v
+    return ("+" + t if v >= 0 else t) if signed else t
 
 
 def _fmt(v, nd=3):
@@ -92,15 +107,22 @@ def narrate(an: dict) -> dict:
     """Plain-language paragraphs built ONLY from the computed numbers."""
     out, rules = an["out"], an["rules"]
     score, tier = an["score"], an["tier"]
-    side = "at or above" if score >= THRESHOLD else "below"
-    summary = [f"The model produced a raw score of {score:.3f}"
-               + (f"; because the displayed scale is 0 to 1 it is shown as {an['score_clipped']:.3f}" if an["clipped"] else "")
-               + f". In this prototype's presentation categories that is '{tier}'. "
-               f"When the model is evaluated in our experiments, a score {side} {THRESHOLD} counts as a 'mastitis' output; "
-               "that is an evaluation convention, not a clinical cut-off, and the score is not a calibrated probability.",
-               {"Low": "In plain terms: the eight measurements together look more like the healthy cows the model was trained on.",
-                "Watch": "In plain terms: the measurements sit between the patterns the model learned for healthy and mastitis cows, so the output is uncertain.",
-                "High": "In plain terms: the eight measurements together look more like the mastitis cows the model was trained on."}[tier]]
+    side = "at or above" if score >= (an["alert_threshold"] if an["task"] == "forecast" else THRESHOLD) else "below"
+    if an["task"] == "forecast":
+        summary = [f"The model produced a raw scenario score of {score:.3f} for the synthetic-data question 'clinical mastitis starts within the next 7 days'. The alert threshold is {an['alert_threshold']:.3f} "
+                   f"(chosen on validation data, not clinically). The score is {side} the threshold, so the tool shows '{tier}'. This is a model output, not a calibrated probability.",
+                   {"Alert": "In plain terms: in the recent days this cow's signals moved away from her own recent baseline in a way that, in the synthetic training data, came before clinical onset.",
+                    "No alert": "In plain terms: this cow's signals stayed close to her own recent baseline, or changed in ways that did not come before clinical onset in the synthetic training data."}[tier],
+                   "The model was built and tested on a synthetic dataset only; this is a demonstration of the method, not a field prediction."]
+    else:
+        summary = [f"The model produced a raw score of {score:.3f}"
+                   + (f"; because the displayed scale is 0 to 1 it is shown as {an['score_clipped']:.3f}" if an["clipped"] else "")
+                   + f". In this prototype's presentation categories that is '{tier}'. "
+                   f"When the model is evaluated in our experiments, a score {side} {THRESHOLD} counts as a 'mastitis' output; "
+                   "that is an evaluation convention, not a clinical cut-off, and the score is not a calibrated probability.",
+                   {"Low": "In plain terms: the eight measurements together look more like the healthy cows the model was trained on.",
+                    "Watch": "In plain terms: the measurements sit between the patterns the model learned for healthy and mastitis cows, so the output is uncertain.",
+                    "High": "In plain terms: the eight measurements together look more like the mastitis cows the model was trained on."}[tier]]
     top = sorted(rules, key=lambda r: -abs(r["weighted_contribution"]))
     contrib = []
     for r in top[:3]:
@@ -119,8 +141,8 @@ def narrate(an: dict) -> dict:
     d = an["dominant"] - 1
     order = np.argsort(-an["mu"][d])
     cols = an["cols"]
-    near = [f"{cols[j]} (membership {an['mu'][d, j]:.2f}; entered {an['entered'][j]:g} vs centre {an['centre'][d, j]:.1f})" for j in order[:2]]
-    far = [f"{cols[j]} (membership {an['mu'][d, j]:.2f}; entered {an['entered'][j]:g} vs centre {an['centre'][d, j]:.1f})" for j in order[::-1][:2]]
+    near = [f"{cols[j]} (membership {an['mu'][d, j]:.2f}; entered {an['entered'][j]:g} vs centre {_n(an['centre'][d, j])})" for j in order[:2]]
+    far = [f"{cols[j]} (membership {an['mu'][d, j]:.2f}; entered {an['entered'][j]:g} vs centre {_n(an['centre'][d, j])})" for j in order[::-1][:2]]
     close = [f"The dominant rule is Rule {an['dominant']} (firing share {rules[0]['firing_share']:.1%}). Its closest measurements to the rule centre are "
              + "; ".join(near) + ". The farthest are " + "; ".join(far) + ".",
              "A membership of 1 means the entered value sits exactly at the rule's centre; values near 0 are many rule-widths away. "
@@ -144,6 +166,13 @@ def narrate(an: dict) -> dict:
 def exam_points(an: dict) -> list:
     d = an["dominant"] - 1
     far = [an["cols"][j] for j in np.argsort(-np.abs(an["z"][d]))[:3]]
+    if an.get("task") == "forecast":
+        pts = ["Examine the udder and milk now (swelling, heat, pain, appearance of milk) regardless of the alert status; the sensor model does not replace this.",
+               "Check the sensor records behind the largest changes: " + ", ".join(far) + " (largest departures from this cow's own baseline in the model's terms).",
+               "Repeat the measurements at the next milking to see whether the change persists.",
+               "Consider the cow's history and context (calving date, previous episodes, hygiene and housing conditions) as the veterinarian sees fit."]
+        if an["weak"]: pts.append("No learned rule matched this cow well, so the alert status is less informative than usual.")
+        return pts
     pts = ["General clinical examination of all four quarters (visible swelling, heat, pain on palpation) and comparison between quarters.",
            "Examination of the milk itself and any laboratory or on-farm milk tests the veterinarian considers appropriate.",
            "Body temperature and general condition of the animal, and the cow's history (calving date, previous episodes).",
@@ -160,17 +189,19 @@ def build_report(an: dict, meta: dict | None = None) -> list:
     meta = meta or {}
     when = meta.get("when") or datetime.now().strftime("%d %b %Y, %H:%M")
     n = an["narrative"]; rules = an["rules"]; cols = an["cols"]
-    B = [("h1", "Detailed model explanation for veterinary review"),
-         ("note", DISCLAIMER),
+    fc = an.get("task") == "forecast"; DIS = DISCLAIMER_FC if fc else DISCLAIMER
+    B = [("h1", "Synthetic 7-day onset scenario explanation" if fc else "Detailed model explanation for veterinary review"),
+         ("note", DIS),
          ("kv", [("Model", f"{an['bundle_mode']} ANFIS ({an['key']}), {an['out']['n_rules']} learned rules"), ("Generated", when)]
+          + ([("Question answered", "Will clinical mastitis start within the next 7 days? (synthetic data)")] if fc else [])
           + ([("Case", meta["case"])] if meta.get("case") else []))]
-    B += [("h2", "1. Entered cow measurements"),
-          ("table", ["Measurement", "Meaning", "Entered value", "Training range"],
+    B += [("h2", "1. Cow measurements" + (" used (change from the cow's own recent baseline)" if fc else " entered")),
+          ("table", ["Measurement", "Meaning", "Value", "Training range"],
            [[m["feature"], m["meaning"], f"{m['entered']:g}", f"{m['lo']:g} to {m['hi']:g}"] for m in an["measurements"]])]
     B += [("h2", "2. Model result and score"),
           ("table", ["Item", "Value"],
            [["Raw model score", f"{an['score']:.3f}"], ["Displayed score (clipped to 0-1)", f"{an['score_clipped']:.3f}"],
-            ["Presentation category", f"{an['tier']} (not a clinically validated threshold)"],
+            ["Presentation category" if not fc else "Alert status", f"{an['tier']} (not a clinically validated threshold)" if not fc else f"{an['tier']} (alert threshold {an['alert_threshold']:.3f}, tuned on validation data)"],
             ["Weak-match check (heuristic)", "Weak match flagged" if an["weak"] else "Not flagged"]]),
           ("p", "The score is the model's output. It is not a calibrated clinical probability.")]
     B += [("h2", "3. Interpretation of the result")] + [("p", s) for s in n["summary"]]
@@ -178,15 +209,15 @@ def build_report(an: dict, meta: dict | None = None) -> list:
           ("p", f"Each row compares the entered value with the centre of the dominant rule (Rule {an['dominant']}) and with the rule whose centre is closest for that measurement. "
                 "Membership is exp(-0.5 x ((value - centre) / width)^2): 1 at the centre, falling towards 0 with distance. No clinical reference ranges are implied."),
           ("table", ["Measurement", "Entered", f"Rule {an['dominant']} centre (+- width)", "Difference", "Membership", "Closest rule", "Its centre", "Membership"],
-           [[m["feature"], f"{m['entered']:g}", f"{m['dom_centre']:.1f} (+-{m['dom_width']:.1f})", f"{m['dom_diff']:+.1f}", f"{m['dom_mu']:.2f}",
-             f"Rule {m['best_rule']}", f"{m['best_centre']:.1f}", f"{m['best_mu']:.2f}"] for m in an["measurements"]])]
+           [[m["feature"], f"{m['entered']:g}", f"{_n(m['dom_centre'])} (+-{_n(m['dom_width'])})", f"{_n(m['dom_diff'], True)}", f"{m['dom_mu']:.2f}",
+             f"Rule {m['best_rule']}", f"{_n(m['best_centre'])}", f"{m['best_mu']:.2f}"] for m in an["measurements"]])]
     B += [("h2", "5. Active ANFIS rules"),
           ("p", f"Rules with a firing share of at least {ACTIVE_SHARE:.0%} are called active here (a presentation choice). Active rules: "
                 + ", ".join(f"Rule {a}" for a in an["active"]) + ".")]
     for a in an["active"]:
         i = a - 1; r = next(rr for rr in rules if rr["rule"] == a)
         B.append(("table", [f"Rule {a}: measurement", "Centre (+- width)", "Entered", "Membership"],
-                  [[cols[j], f"{an['centre'][i, j]:.1f} (+-{an['width'][i, j]:.1f})", f"{an['entered'][j]:g}", f"{an['mu'][i, j]:.2f}"] for j in range(len(cols))]))
+                  [[cols[j], f"{_n(an['centre'][i, j])} (+-{_n(an['width'][i, j])})", f"{an['entered'][j]:g}", f"{an['mu'][i, j]:.2f}"] for j in range(len(cols))]))
         B.append(("p", f"Rule {a}: raw firing strength {r['raw_firing']:.2e}, firing share {r['firing_share']:.1%}, linear output for this cow {r['rule_output_for_this_cow']:.3f}."))
     B += [("h2", "6. Rule firing-strength analysis")] + [("p", s) for s in n["activation"]]
     B.append(("table", ["Rule", "Raw firing strength", "Firing share"],
@@ -198,18 +229,29 @@ def build_report(an: dict, meta: dict | None = None) -> list:
            [[f"Rule {r['rule']}", f"{r['firing_share']:.3f}", f"{r['rule_output_for_this_cow']:.3f}", f"{r['weighted_contribution']:+.3f}"] for r in rules]
            + [["Sum (raw score)", "", "", f"{an['score']:+.3f}"]])]
     B += [("h2", "8. How the final score was obtained")] + [("p", s) for s in n["contributions"]] + [("p", s) for s in n["closeness"]]
+    if fc and meta.get("recent"):
+        rs = meta["recent"]
+        B += [("h2", "What the model suggests may happen next"),
+              ("p", f"Scenario scores for the last {len(rs)} days: " + ", ".join(f"{x:.2f}" for x in rs) + f" (alert threshold {an['alert_threshold']:.2f}). "
+                    + ("The score has been rising." if rs[-1] > rs[0] + 0.05 else ("The score has been falling." if rs[-1] < rs[0] - 0.05 else "The score has been roughly stable.")) + " "
+                    + ("An alert is active: the model considers onset within 7 days more likely than for cows without an alert, in the synthetic data." if an["tier"] == "Alert"
+                       else "No alert is active today."))]
     B += [("h2", "9. Important model warnings and limitations")]
     w = list(n["warnings"]) + (n["activation"][:1] if an["weak"] else [])
-    B.append(("ul", w + [
+    B.append(("ul", w + ([
+        "Built and tested only on computer-generated data. Results describe this synthetic scenario only and do not show real-farm performance.",
+        "Cow-grouped cross-validation was used; the alert threshold was tuned on validation cows, never on test cows.",
+        "The score is not a probability; alert status is not a diagnosis. No external or real-farm validation.",
+        "Learned rules describe patterns in the synthetic data and have not been reviewed by a veterinary expert."] if fc else [
         "Trained on the project's working clinical mastitis dataset associated with Mendeley record kbvcdw5b4m; Version 2 provenance is pending archive-level verification.",
         "No external farm validation. Performance numbers come from one research dataset (1,100 cows) evaluated with cow-grouped cross-validation.",
         "Low / Watch / High are presentation categories on the model score, not clinical thresholds.",
-        "The model detects existing clinical mastitis patterns in this dataset. It does not forecast future disease.",
-        "Learned rules describe patterns in the training data; they have not been reviewed by a veterinary expert."]))
+        "This detection report describes existing clinical mastitis patterns in the working research dataset.",
+        "Learned rules describe patterns in the training data; they have not been reviewed by a veterinary expert."])))
     B += [("h2", "10. Suggested points for veterinary examination"),
           ("p", "General points for professional verification only. This report gives no diagnosis, treatment or medication advice."),
           ("ul", exam_points(an))]
-    B += [("h2", "11. Closing disclaimer"), ("note", DISCLAIMER)]
+    B += [("h2", "11. Closing disclaimer"), ("note", DIS)]
     return B
 
 

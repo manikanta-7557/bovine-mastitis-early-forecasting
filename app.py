@@ -1,7 +1,7 @@
 """
 app.py -- Streamlit dashboard for the interpretable ANFIS (research prototype, NOT a diagnostic tool)
 Run:  streamlit run app.py
-Sections: Predict | Demo (15-page guided presentation) | How it works | Model facts.
+Sections: Predict | Synthetic onset study | Demo (15-page guided presentation) | How it works | Model facts.
 All maths lives in app_core.py / explain_report.py (unit-tested). demo.py holds the Demo pages; ui_style.py the look.
 """
 from pathlib import Path
@@ -12,6 +12,7 @@ import streamlit.components.v1 as components
 import app_core
 import demo
 import explain_report as er
+import forecast_core as fc
 import facts as F
 import plots
 import ui_style as ui
@@ -38,6 +39,12 @@ def get_facts():
 
 
 @st.cache_data
+def get_fc():
+    p = ROOT / "models/scaler_FC7.json"; q = ROOT / fc.DATA_DIR / "daily_cow_data.csv"
+    return None if not (p.exists() and q.exists()) else (fc.load_forecast(ROOT), fc.load_daily(ROOT), fc.heldout_cows(ROOT))
+
+
+@st.cache_data
 def get_examples(mode):
     d = get_df()
     return None if d is None else app_core.pick_examples(get_bundle(mode), d)
@@ -47,38 +54,37 @@ UNITS = {"temperature": "dataset scale (unit not documented)", "months_pp": "mon
          "hardness": "0 = normal, 1 = hard udder", "pain": "0 = no pain, 1 = pain"}
 
 with st.sidebar:
-    st.markdown("### Bovine health research")
-    st.caption("Interpretable model workspace")
-    mode = st.radio("Feature set", list(app_core.MODES), key="model_mode",
+    st.markdown("### ANFIS mastitis detection")
+    mode = st.radio("Model", list(app_core.MODES), key="model_mode",
                     help="Sensor-only: the 8 udder sensors. Full-clinical: adds temperature, months postpartum, breed, hardness, pain.")
-    st.info("Research prototype. Risk scores are not a veterinary diagnostic tool.")
-    st.caption("Sensor-only uses eight raw udder sensors. Full-clinical adds recorded clinical features.")
+    st.info("Research prototype, not a diagnosis. The detection model is for existing clinical mastitis patterns. The separate onset study uses synthetic data only.")
+    st.caption("Sensor-only = raw 8 sensors (R8). Full-clinical = R13.")
 bundle = get_bundle(mode); cols = bundle["cols"]; lo, hi = bundle["lo"], bundle["hi"]
 
-ui.hero("Existing clinical mastitis detection", "An interpretable ANFIS research dashboard for sensor-only and full-clinical risk scores.")
-section = st.radio("Section", ["Predict", "Demo", "How it works", "Model facts"], horizontal=True, key="section", label_visibility="collapsed")
+ui.hero("Interpretable detection of clinical mastitis", "Neuro-fuzzy (ANFIS) decision support that explains every score with its fuzzy rules")
+section = st.radio("Section", ["Predict", "Synthetic onset study", "Demo", "How it works", "Model facts"], horizontal=True, key="section", label_visibility="collapsed")
 
 
 # ---------------------------------------------------------------------------------------------- Predict
-def show_analysis(an):
-    out = an["out"]
+def show_analysis(an, meta=None):
+    out = an["out"]; fcst = an.get("task") == "forecast"
     for w in out["warnings"]:
         st.warning(w)
     st.subheader("A. Prediction summary")
     a, b, c = st.columns(3)
-    with a: ui.kpi("Presentation category", out["tier"], "not a clinical threshold")
+    with a: ui.kpi("Alert status" if fcst else "Presentation category", an["tier"], f"threshold {an['alert_threshold']:.2f} (validation-tuned)" if fcst else "not a clinical threshold")
     with b: ui.kpi("Raw model score", f"{out['score']:.3f}", "sum of rule contributions")
     with c: ui.kpi("Displayed score (0-1)", f"{out['score_clipped']:.2f}", "clipped for display" if out["clipped"] else "same as raw")
     st.progress(out["score_clipped"])
-    ui.callout("The score is a <b>model output, not a calibrated clinical probability</b>. Low / Watch / High are presentation categories.")
+    ui.callout("The score is a <b>model output, not a calibrated clinical probability</b>. " + ("Alert / No alert uses a threshold tuned on validation data of a SYNTHETIC dataset." if fcst else "Low / Watch / High are presentation categories."))
     for s in an["narrative"]["summary"]:
         st.write(s)
 
     st.subheader("B. Input measurement analysis")
     st.caption(f"Comparison with the dominant rule (Rule {an['dominant']}) and with the closest rule per measurement. Membership 1 = at the rule centre. No clinical reference ranges are implied.")
     st.dataframe(pd.DataFrame([{"Measurement": m["feature"], "Entered": m["entered"], "Training range": f"{m['lo']:g} to {m['hi']:g}" + ("" if m["in_range"] else "  (OUTSIDE: clipped)"),
-                                f"Rule {an['dominant']} centre": round(m["dom_centre"], 1), "Difference": round(m["dom_diff"], 1), "Membership": round(m["dom_mu"], 2),
-                                "Closest rule": m["best_rule"], "Its centre": round(m["best_centre"], 1), "Its membership": round(m["best_mu"], 2)} for m in an["measurements"]]), hide_index=True)
+                                f"Rule {an['dominant']} centre": er._n(m["dom_centre"]), "Difference": er._n(m["dom_diff"]), "Membership": round(m["dom_mu"], 2),
+                                "Closest rule": m["best_rule"], "Its centre": er._n(m["best_centre"]), "Its membership": round(m["best_mu"], 2)} for m in an["measurements"]]), hide_index=True)
     with st.expander("Membership of every measurement in every rule"):
         st.dataframe(pd.DataFrame(an["mu"].round(3), columns=an["cols"], index=[f"Rule {i + 1}" for i in range(len(an["mu"]))]))
 
@@ -106,7 +112,7 @@ def show_analysis(an):
     if st.button("Generate Detailed Veterinary Explanation", type="primary", key="gen_report"):
         st.session_state["report_for"] = id(an)
     if st.session_state.get("report_for") == id(an):
-        blocks = er.build_report(an)
+        blocks = er.build_report(an, meta)
         html = er.report_html(blocks)
         components.html(html, height=640, scrolling=True)
         d1, d2 = st.columns(2)
@@ -156,10 +162,41 @@ if section.endswith("Predict"):
     else:
         st.info("Enter the measurements (or load an example) and press 'Estimate risk'.")
 
+# ---------------------------------------------------------------------------------------------- Synthetic onset scenario
+elif section.endswith("Synthetic onset study"):
+    st.header("Synthetic 7-day onset scenario")
+    ui.callout("<b>Computer-generated data only.</b> This section demonstrates model behavior on a synthetic 90-day farm dataset and a seven-day clinical-onset target. "
+               "It is not real-animal evidence, does not establish farm performance, and is separate from the existing-clinical-mastitis detection results.", warn=True)
+    pack = get_fc()
+    if pack is None:
+        st.info("Scenario files not found. Place the provided data under data/external/Synthetic_Data_for_Mastitis_Disease/ and run `python train_forecast_model.py --data data/external/Synthetic_Data_for_Mastitis_Disease`.")
+    else:
+        fb, daily, held = pack
+        info = {c: daily[daily.cow_id == c].mastitis_status.max() for c in held}
+        label = lambda c: f"{c}  ({'clinical onset in this study' if info[c] == 2 else 'no clinical onset'})"
+        cow = st.selectbox("Held-out animal (never seen in training)", held, format_func=label, key="fc_cow")
+        tr = fc.trajectory(fb, daily, cow); on = tr.onset_day.iloc[0]
+        days = [int(x) for x in tr[tr.forecast_eligible == 1].day_index]
+        default = int(max(min(days), min(days[-1], (on - 5) if on == on else days[len(days) // 2])))
+        day = st.select_slider("Study day to explain (before clinical onset)", options=days, value=default if default in days else days[0], key="fc_day")
+        st.pyplot(plots.forecast_trajectory(tr[tr.forecast_eligible == 1], fb["alert_threshold"], day), clear_figure=True)
+        key = (cow, day); cached = st.session_state.get("fc_an")
+        if not cached or cached[0] != key:
+            vals_f = fc.vals_at(fb, tr, day); an_f = er.analyse(fb, vals_f); st.session_state["fc_an"] = (key, an_f); st.session_state.pop("report_for", None)
+        an_f = st.session_state["fc_an"][1]
+        recent = [float(x) for x in tr[(tr.day_index <= day) & (tr.day_index > day - 7)].score]
+        show_analysis(an_f, dict(case=f"synthetic animal {cow}, study day {day}", recent=recent))
+    p = ROOT / "reports/forecast/forecast_summary.csv"
+    if p.exists():
+        with st.expander("Cross-validated results on the synthetic study data"):
+            sm = pd.read_csv(p); sm = sm[sm.target == "clinical_within_7d"]
+            st.dataframe(sm[["feature_set", "model", "ROC_AUC", "PR_AUC", "precision", "recall", "F1", "onset_cows_alerted", "onset_cows", "median_lead_days", "false_alert_days_per_100"]].round(3), hide_index=True)
+            st.caption("D8 = deviation from the cow's own previous 14 days; C8 = today's raw values only. Cow-grouped five-fold evaluation on synthetic data; these results are not clinical evidence.")
+
 # ---------------------------------------------------------------------------------------------- Demo
 elif section.endswith("Demo"):
     d = get_df(); sb = get_bundle("Sensor-only")
-    demo.render(dict(bundle=sb, facts=get_facts(), examples=None if d is None else app_core.pick_examples(sb, d)))
+    demo.render(dict(root=ROOT, bundle=sb, facts=get_facts(), examples=None if d is None else app_core.pick_examples(sb, d)))
 
 # ---------------------------------------------------------------------------------------------- How it works
 elif section.endswith("How it works"):
@@ -197,4 +234,4 @@ else:
         if len(r):
             st.write(f"Fold-0 test: F1 {r.row_f1.iloc[0]:.3f}, AUC {r.row_auc.iloc[0]:.3f} (single fold, preliminary; see the Demo for cross-validation results).")
 
-st.caption("Research prototype. Not a diagnostic tool. Results are preliminary.")
+st.caption("Research prototype, not a diagnostic tool. The primary model detects existing clinical mastitis.")

@@ -43,3 +43,9 @@ Add an entry every session: date, who, what you did, what you learned, what is n
 - Added a visual project workflow and a five-layer ANFIS architecture at the beginning of the guided demo.
 - Updated demo navigation and tests for 15 slides, and corrected the later internal-working slide to distinguish preprocessing from the five ANFIS layers.
 - Verified both new visuals in the browser; syntax, demo/report and dashboard tests passed.
+
+## 2026-11-03 - Copilot-assisted UI v3 integration
+- Added the isolated computer-generated seven-day onset study, saved model, and supporting data without changing the existing R8/R13 detection models or clinical data.
+- Integrated the new app section, per-day plot, explanation/report support, and auxiliary detection metrics while retaining the 15-page demo and current visual styling.
+- Ran the model, dashboard, report, and scenario tests; all passed. Generated auxiliary detection metrics and verified the detection example, synthetic study section, and supplemental metrics panel in the browser.
+- Next: review the integrated branch and commit.

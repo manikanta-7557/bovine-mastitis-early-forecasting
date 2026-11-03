@@ -1,4 +1,4 @@
-# Project context for AI assistants (Copilot, Claude, others). Updated 2 Nov 2026.
+# Project context for AI assistants (Copilot, Claude, others). Updated 3 Nov 2026.
 
 ## 1. Goal and deadlines
 Deliver the Final Review (40 marks), project report (20) and an article draft by Wednesday 4 Nov 2026. Grading file: "0 Evaluation Criteria.docx". Final Review items: problem formulation and objectives (3), methodology and technical correctness (4), complete implementation (8), experimental evaluation (7), results, comparison and discussion (5), application/novelty and use of soft computing (5), presentation and demo (3), viva (5). Report: abstract/intro (2), literature and gap (3), methodology (3), implementation (2), results (4), discussion/limits (2), article documentation (2), references (1), formatting (1).
@@ -46,3 +46,9 @@ Main finding: feature design (two engineered indices vs eight raw sensors) matte
 
 ## 7. Defense guide in one paragraph
 Group by cow because six rows per cow are correlated. ANFIS is chosen for readable rules, not accuracy: 4 to 5 rules in raw sensor units versus 3^5 = 243 for a grid partition. Hybrid learning: least squares solves the linear consequents exactly, Adam tunes centres and widths. Subtractive clustering picks rule count from data density. We report a negative GA result and that random forest is better. Rejected: random row splits, oversampling before splitting, Wilcoxon over 5 folds (minimum p 0.0625), SHAP-only explanation.
+
+## 8. Separate synthetic onset demonstration
+- UI v3 adds a **Synthetic onset study** section using only `data/external/Synthetic_Data_for_Mastitis_Disease/`; these computer-generated records are not the working clinical detection dataset and are not real-animal or farm evidence.
+- The study uses past-only sensor deviations, cow-grouped folds, training-only scaling, and validation-only selection. Its outputs are isolated under `models/` and `reports/forecast/`; it does not overwrite R8/R13 detection models, clinical datasets, or existing experiment results.
+- `forecast_core.py`, `forecast_study.py`, and `train_forecast_model.py` implement the optional study; `test_forecast.py` checks feature leakage, cow grouping, the saved model, explanations, and report output.
+- Keep all project conclusions and clinical claims scoped to detection of existing clinical mastitis. The synthetic study is only a software demonstration.
