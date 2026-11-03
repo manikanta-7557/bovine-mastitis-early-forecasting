@@ -27,7 +27,7 @@ def results_bars(r8, metric="F1", models=None):
 
 def contributions_bar(rules, score):
     rs = sorted(rules, key=lambda r: r["rule"])
-    fig, ax = plt.subplots(figsize=(5.2, 2.8))
+    fig, ax = plt.subplots(figsize=(6, 3.2))
     v = [r["weighted_contribution"] for r in rs]
     ax.bar([f"Rule {r['rule']}" for r in rs], v, color=[G if x >= 0 else AMB for x in v])
     for i, x in enumerate(v):
@@ -36,23 +36,25 @@ def contributions_bar(rules, score):
     ax.set_title(f"Weighted contribution per rule (sum = raw score {score:.3f})", fontsize=10, loc="left")
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
-    fig.tight_layout(); return fig
+    fig.subplots_adjust(left=.1, right=.98, top=.82, bottom=.2)
+    return fig
 
 
 def membership_curves(bundle, j, entered=None):
     m = bundle["model"]; lo, hi = bundle["lo"][j], bundle["hi"][j]; span = hi - lo
     xs = np.linspace(lo, hi, 300); xn = (xs - lo) / span
-    fig, ax = plt.subplots(figsize=(5.2, 2.8))
+    fig, ax = plt.subplots(figsize=(6, 3.4))
     pal = ["#1f6f54", "#0e7c86", "#b7791f", "#7a5195", "#c0504d", "#4f6d7a"]
     for i in range(m.R):
         ax.plot(xs, np.exp(-0.5 * ((xn - m.c[i, j]) / m.s[i, j]) ** 2), color=pal[i % len(pal)], lw=1.8, label=f"Rule {i + 1}")
     if entered is not None:
         ax.axvline(entered, color="#33433b", ls="--", lw=1); ax.text(entered, 1.03, "entered", fontsize=8, ha="center")
     ax.set_ylim(0, 1.12); ax.set_xlabel(f"{bundle['cols'][j]} (raw units)"); ax.set_ylabel("membership")
-    ax.legend(fontsize=7, ncol=3, frameon=False, loc="upper center", bbox_to_anchor=(.5, -0.28))
+    ax.legend(fontsize=7, ncol=3, frameon=False, loc="upper center", bbox_to_anchor=(.5, -0.27))
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
-    fig.tight_layout(); return fig
+    fig.subplots_adjust(left=.13, right=.98, top=.95, bottom=.34)
+    return fig
 
 
 def forecast_trajectory(traj, thr, day=None):

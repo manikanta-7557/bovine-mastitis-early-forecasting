@@ -118,7 +118,7 @@ def narrate(an: dict) -> dict:
         summary = [f"The model produced a raw score of {score:.3f}"
                    + (f"; because the displayed scale is 0 to 1 it is shown as {an['score_clipped']:.3f}" if an["clipped"] else "")
                    + f". In this prototype's presentation categories that is '{tier}'. "
-                   f"When the model is evaluated in our experiments, a score {side} {THRESHOLD} counts as a 'mastitis' output; "
+                   f"When the model is evaluated in our experiments, a score at or above {THRESHOLD} counts as a 'mastitis' output; "
                    "that is an evaluation convention, not a clinical cut-off, and the score is not a calibrated probability.",
                    {"Low": "In plain terms: the eight measurements together look more like the healthy cows the model was trained on.",
                     "Watch": "In plain terms: the measurements sit between the patterns the model learned for healthy and mastitis cows, so the output is uncertain.",

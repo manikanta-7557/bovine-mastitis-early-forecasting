@@ -28,18 +28,26 @@ raw CSV -> data_prep.py (drop leakage, cow-grouped split, 2 indices, train-only 
                                                                    /  compared in reports/comparison.csv
 ```
 
-## Synthetic onset scenario
+## Research dashboard
 
-The app also includes a separate seven-day onset demonstration using the computer-generated data under `data/external/Synthetic_Data_for_Mastitis_Disease/`. This is not real-animal or farm evidence and does not change the project's primary task: detection of existing clinical mastitis.
+Run `streamlit run app.py` to open the research dashboard. Its sidebar separates the existing-clinical-mastitis model from the computer-generated study:
 
 ```bash
-python test_app_core.py
-python test_explain_report.py
-python test_forecast.py
 streamlit run app.py
 ```
 
-Choose **Synthetic onset study** in the app to inspect held-out study animals, the per-day score plot, rule explanation, and the synthetic-study results. The scenario modules and model use separate `forecast_*` files and `FC7` artifacts; they do not replace the R8 or R13 detection models. `requirements.txt` already includes the UI and PDF dependencies.
+The workspace includes an overview, rule-level explanations, a temporal view of the generated study, an identifier-redacted data explorer, saved-model details, evaluation results, and project methodology. The seven-day onset demonstration uses data under `data/external/Synthetic_Data_for_Mastitis_Disease/`; it is not real-animal or farm evidence and does not change the project's primary task: detection of existing clinical mastitis. Existing R8/R13 models and evaluation results remain separate from the FC7 study artifacts.
+
+Run the dashboard smoke test and underlying model/report tests with:
+
+```bash
+python test_dashboard_ui.py
+python test_app_core.py
+python test_explain_report.py
+python test_forecast.py
+```
+
+Animal and farm identifiers are omitted from data-explorer previews and downloads. `requirements.txt` already includes the UI and PDF dependencies.
 
 ## Where to read next
 

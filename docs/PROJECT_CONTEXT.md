@@ -28,7 +28,7 @@ Main finding: feature design (two engineered indices vs eight raw sensors) matte
 ## 5. Known issues and limits
 - Notebook ANFIS_PROJECT_MASTITIS_FORECASTING.ipynb cell 64 overwrites the raw CSV with Version 1; cell 107 numbers are hand-typed Version 1 values. Do not use.
 - Old Streamlit model files from Madhur's repo were trained on something else (probably Version 1); replaced by models/anfis_R8.npz and anfis_R13.npz.
-- Dashboard maths tested (test_app_core.py), but the UI itself must be run by hand with streamlit.
+- Dashboard maths is tested in `test_app_core.py`; navigation and key controls are smoke-tested in `test_dashboard_ui.py`. Browser review is still needed for visual changes.
 - explain.py prints each rule's output at its centre, not for the entered cow (first-order consequents).
 - Unread papers: Chiu 1994, Ebrahimi 2019, Ankitha & Manjaiah, Mammadova & Keskin 2015, Kohli 2011. Do not cite as read.
 - A second unrelated dataset (qPCR pathogen study, 33 cows) was evaluated and dropped.

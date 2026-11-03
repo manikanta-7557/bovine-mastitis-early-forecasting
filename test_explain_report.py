@@ -29,6 +29,7 @@ b = app_core.load("Sensor-only"); cols = b["cols"]; ex = app_core.pick_examples(
 # 5. healthy and mastitis examples land where expected
 h = er.analyse(b, {c: float(ex["Healthy cow (median score)"][c]) for c in cols}); m = er.analyse(b, {c: float(ex["Mastitis cow (median score)"][c]) for c in cols})
 assert h["tier"] == "Low" and m["tier"] == "High", (h["tier"], m["tier"])
+assert "score at or above 0.5 counts as a 'mastitis' output" in " ".join(h["narrative"]["summary"])
 # 6. weak-activation warning: a cow far from every rule triggers it; text states it is a heuristic
 far = {c: float(b["hi"][i]) for i, c in enumerate(cols)}; far[cols[0]] = float(b["lo"][0])
 a = er.analyse(b, far); assert a["weak"] and "heuristic" in " ".join(a["narrative"]["activation"]).lower()
