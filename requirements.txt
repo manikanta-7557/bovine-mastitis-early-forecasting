@@ -1,6 +1,7 @@
 numpy>=1.23
 pandas>=1.5
 scikit-learn>=1.1
+scipy
 matplotlib>=3.5
-# later (Final Review demo):
-# streamlit
+streamlit>=1.35
+reportlab>=4.0

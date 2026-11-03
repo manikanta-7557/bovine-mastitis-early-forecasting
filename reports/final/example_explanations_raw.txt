@@ -1,0 +1,4 @@
+[R8] highest-score test row: cow cow28, true label 1, score 1.205; top rules (firing share): rule 2 (1.00), rule 5 (0.00), rule 1 (0.00)
+[R8] lowest-score test row: cow cow989, true label 0, score -0.393; top rules (firing share): rule 5 (0.49), rule 3 (0.48), rule 1 (0.03)
+[R13] highest-score test row: cow cow174, true label 1, score 1.222; top rules (firing share): rule 3 (1.00), rule 4 (0.00), rule 1 (0.00)
+[R13] lowest-score test row: cow cow940, true label 0, score -0.417; top rules (firing share): rule 1 (0.69), rule 4 (0.31), rule 3 (0.00)

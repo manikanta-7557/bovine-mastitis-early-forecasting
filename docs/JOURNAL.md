@@ -28,3 +28,18 @@ Add an entry every session: date, who, what you did, what you learned, what is n
 ## 2026-11-01 - Copilot-assisted documentation cleanup
 - Consolidated project Markdown documentation, audit notes and run log into `docs/`; retained root `README.md` and `.github/pull_request_template.md` in their GitHub-required locations.
 - Updated documentation and helper references to the new paths. No data, model or experiment outputs were changed.
+
+## 2026-11-02 - Copilot-assisted dashboard refresh
+- Refined the Streamlit dashboard with a responsive research header, cleaner surfaces, consistent green styling and clearer feature-set guidance.
+- Kept the prediction, explanation and model workflows unchanged; confirmed the page loads and a healthy example reaches its expected presentation category.
+- Ran Python syntax checks, dashboard tests and report tests. Next: review the page during the final presentation run.
+
+## 2026-11-02 - Copilot-assisted emoji removal
+- Removed emoji from the browser title icon, sidebar heading and section navigation.
+- Confirmed the live page renders the plain-text labels and scanned visible app modules for remaining emoji.
+- Python syntax checks and dashboard/report tests passed.
+
+## 2026-11-02 - Copilot-assisted demo visuals
+- Added a visual project workflow and a five-layer ANFIS architecture at the beginning of the guided demo.
+- Updated demo navigation and tests for 15 slides, and corrected the later internal-working slide to distinguish preprocessing from the five ANFIS layers.
+- Verified both new visuals in the browser; syntax, demo/report and dashboard tests passed.
