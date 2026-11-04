@@ -1,0 +1,29 @@
+{
+  "seed": 42,
+  "base_window": 14,
+  "min_prior": 3,
+  "ra_grid": [
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "neg_per_pos": 5,
+  "signals": [
+    "milk_conductivity_ms_cm",
+    "milk_ph",
+    "milk_yield_l",
+    "milk_lactose_pct",
+    "body_temp_c",
+    "udder_surface_temp_c",
+    "rumination_min",
+    "activity_steps"
+  ],
+  "rows_eligible": 22837,
+  "cows": 300,
+  "onset_cows": 83,
+  "seconds": 280,
+  "synthetic": true
+}

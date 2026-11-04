@@ -1,0 +1,193 @@
+table,column,dtype,description
+mastitis_master_dataset.csv,cow_id,str,Unique animal ID
+mastitis_master_dataset.csv,farm_id,str,Farm / herd ID
+mastitis_master_dataset.csv,date,object,Observation date (YYYY-MM-DD)
+mastitis_master_dataset.csv,day_index,int64,Day number in study (0-89)
+mastitis_master_dataset.csv,dim,int64,Days in milk on that date
+mastitis_master_dataset.csv,lactation_stage,str,early (<=100 DIM) / mid (<=200) / late
+mastitis_master_dataset.csv,milk_yield_l,float64,Daily milk yield (litres) from milk meter
+mastitis_master_dataset.csv,milk_conductivity_ms_cm,float64,"Milk electrical conductivity (mS/cm); normal ~4.0-5.5, rises with mastitis"
+mastitis_master_dataset.csv,milk_temp_c,float64,Milk temperature at milking (deg C)
+mastitis_master_dataset.csv,milk_ph,float64,"Milk pH; normal ~6.6-6.8, rises with mastitis"
+mastitis_master_dataset.csv,milk_fat_pct,float64,Milk fat %
+mastitis_master_dataset.csv,milk_protein_pct,float64,Milk protein %
+mastitis_master_dataset.csv,milk_lactose_pct,float64,Milk lactose %; falls with mastitis
+mastitis_master_dataset.csv,body_temp_c,float64,Body temperature from collar/bolus (deg C)
+mastitis_master_dataset.csv,udder_surface_temp_c,float64,"Udder surface temperature (deg C, thermal sensor)"
+mastitis_master_dataset.csv,activity_steps,float64,Daily activity (steps) from collar/pedometer
+mastitis_master_dataset.csv,rumination_min,float64,Daily rumination time (min)
+mastitis_master_dataset.csv,feeding_time_min,float64,Daily feeding time (min)
+mastitis_master_dataset.csv,concentrate_kg,float64,Concentrate fed (kg/day)
+mastitis_master_dataset.csv,green_fodder_kg,float64,Green fodder fed (kg/day)
+mastitis_master_dataset.csv,dry_fodder_kg,float64,Dry fodder fed (kg/day)
+mastitis_master_dataset.csv,mineral_mix_given,int64,Mineral mixture given that day (0/1)
+mastitis_master_dataset.csv,udder_hygiene_score,int64,Udder cleanliness score 1 (clean) to 4 (very dirty)
+mastitis_master_dataset.csv,pre_milking_wash_done,int64,Pre-milking teat wash done (0/1)
+mastitis_master_dataset.csv,teat_dip_done,int64,Post-milking teat dip done (0/1)
+mastitis_master_dataset.csv,milking_delay_min,int64,Minutes late (+) or early (-) vs scheduled milking time
+mastitis_master_dataset.csv,scc_cells_ml,float64,Somatic cell count (cells/mL) from weekly lab test; blank on non-test days
+mastitis_master_dataset.csv,cmt_score,float64,"California Mastitis Test on test days: 0 neg, 1 trace, 2 (+), 3 (++), 4 (+++); blank otherwise"
+mastitis_master_dataset.csv,antibiotic_given,int64,Antibiotic treatment given that day (0/1)
+mastitis_master_dataset.csv,milk_discard,int64,Milk under withdrawal/discard (0/1)
+mastitis_master_dataset.csv,vet_visit,int64,Veterinarian visit/treatment initiated that day (0/1)
+mastitis_master_dataset.csv,species,str,cattle / buffalo
+mastitis_master_dataset.csv,breed,str,Breed
+mastitis_master_dataset.csv,age_years,float64,Age (years)
+mastitis_master_dataset.csv,parity,int64,Lactation number
+mastitis_master_dataset.csv,calving_date,object,Last calving date
+mastitis_master_dataset.csv,dim_at_start,int64,Days in milk on day 0
+mastitis_master_dataset.csv,body_condition_score,float64,BCS 2.0-4.0
+mastitis_master_dataset.csv,teat_end_score,int64,Teat-end condition 1 (smooth) to 4 (very rough)
+mastitis_master_dataset.csv,udder_shape,str,bowl / round / pendulous
+mastitis_master_dataset.csv,previous_mastitis_count,int64,Past mastitis episodes
+mastitis_master_dataset.csv,days_since_last_mastitis,float64,Days since last episode (blank if none)
+mastitis_master_dataset.csv,comorbidity,str,Co-existing condition
+mastitis_master_dataset.csv,vaccination_status,str,up_to_date / partial / none
+mastitis_master_dataset.csv,district,str,District
+mastitis_master_dataset.csv,state,str,State
+mastitis_master_dataset.csv,latitude,float64,"Farm latitude (approx., synthetic jitter)"
+mastitis_master_dataset.csv,longitude,float64,Farm longitude
+mastitis_master_dataset.csv,farm_type,str,smallholder / cooperative / organized / commercial
+mastitis_master_dataset.csv,lactating_animals_in_dataset,int64,Animals of this farm in the dataset
+mastitis_master_dataset.csv,total_herd_strength,int64,Total herd incl. dry and young stock
+mastitis_master_dataset.csv,milking_system,str,hand / bucket_machine / pipeline
+mastitis_master_dataset.csv,housing_system,str,tie-stall / loose / free-stall
+mastitis_master_dataset.csv,floor_type,str,mud / concrete / rubber_mat
+mastitis_master_dataset.csv,bedding_type,str,none / straw / sand / rubber_mat
+mastitis_master_dataset.csv,ventilation_cooling,str,natural / fans / fans+sprinklers
+mastitis_master_dataset.csv,feeding_system,str,separate_feeding / TMR
+mastitis_master_dataset.csv,farm_hygiene_score,float64,Overall farm hygiene 1 (poor) - 5 (excellent)
+mastitis_master_dataset.csv,post_milking_teat_dip,int64,Farm practices teat dipping (0/1)
+mastitis_master_dataset.csv,pre_milking_wash,int64,Farm practices pre-milking wash (0/1)
+mastitis_master_dataset.csv,dry_cow_therapy,int64,Farm uses dry cow therapy (0/1)
+mastitis_master_dataset.csv,mineral_mixture_use,int64,Farm uses mineral mixture (0/1)
+mastitis_master_dataset.csv,water_source,str,borewell / tap / pond
+mastitis_master_dataset.csv,water_quality_score,int64,Drinking water quality 1-5
+mastitis_master_dataset.csv,manure_removal_per_day,int64,Times manure removed per day
+mastitis_master_dataset.csv,milker_hygiene_score,float64,Milker hygiene 1-5
+mastitis_master_dataset.csv,milker_health_issue,int64,Milker has skin/respiratory/other illness (0/1)
+mastitis_master_dataset.csv,vet_access,str,rare / on-call / regular
+mastitis_master_dataset.csv,ambient_temp_c,float64,Daily mean ambient temperature (deg C)
+mastitis_master_dataset.csv,humidity_pct,float64,Relative humidity (%)
+mastitis_master_dataset.csv,rainfall_mm,float64,Rainfall (mm)
+mastitis_master_dataset.csv,thi,float64,Temperature-Humidity Index; >72 = heat stress
+mastitis_master_dataset.csv,barn_hygiene_score,float64,Daily barn cleanliness 1-5
+mastitis_master_dataset.csv,bedding_wetness_index,float64,Bedding/floor wetness 0 (dry) - 1 (wet)
+mastitis_master_dataset.csv,mastitis_status,int64,"Ground truth state: 0 healthy, 1 subclinical (true SCC>200k), 2 clinical"
+mastitis_master_dataset.csv,days_to_clinical,float64,Days until clinical onset (0 = onset day). Blank for cows with no clinical event and after onset
+mastitis_master_dataset.csv,clinical_within_7d,int64,TARGET: clinical onset occurs 1-7 days ahead (0/1)
+mastitis_master_dataset.csv,clinical_within_14d,int64,TARGET: clinical onset occurs 1-14 days ahead (0/1)
+mastitis_master_dataset.csv,forecast_eligible,int64,1 = row valid for forecasting (animal not yet clinical / no prior onset). Filter on this when training
+mastitis_master_dataset.csv,risk_level,int64,"TARGET: 0 No Risk, 1 Low, 2 Moderate, 3 High"
+mastitis_master_dataset.csv,risk_category,str,Text version of risk_level
+daily_cow_data.csv,cow_id,str,Unique animal ID
+daily_cow_data.csv,farm_id,str,Farm / herd ID
+daily_cow_data.csv,date,object,Observation date (YYYY-MM-DD)
+daily_cow_data.csv,day_index,int64,Day number in study (0-89)
+daily_cow_data.csv,dim,int64,Days in milk on that date
+daily_cow_data.csv,lactation_stage,str,early (<=100 DIM) / mid (<=200) / late
+daily_cow_data.csv,milk_yield_l,float64,Daily milk yield (litres) from milk meter
+daily_cow_data.csv,milk_conductivity_ms_cm,float64,"Milk electrical conductivity (mS/cm); normal ~4.0-5.5, rises with mastitis"
+daily_cow_data.csv,milk_temp_c,float64,Milk temperature at milking (deg C)
+daily_cow_data.csv,milk_ph,float64,"Milk pH; normal ~6.6-6.8, rises with mastitis"
+daily_cow_data.csv,milk_fat_pct,float64,Milk fat %
+daily_cow_data.csv,milk_protein_pct,float64,Milk protein %
+daily_cow_data.csv,milk_lactose_pct,float64,Milk lactose %; falls with mastitis
+daily_cow_data.csv,body_temp_c,float64,Body temperature from collar/bolus (deg C)
+daily_cow_data.csv,udder_surface_temp_c,float64,"Udder surface temperature (deg C, thermal sensor)"
+daily_cow_data.csv,activity_steps,float64,Daily activity (steps) from collar/pedometer
+daily_cow_data.csv,rumination_min,float64,Daily rumination time (min)
+daily_cow_data.csv,feeding_time_min,float64,Daily feeding time (min)
+daily_cow_data.csv,concentrate_kg,float64,Concentrate fed (kg/day)
+daily_cow_data.csv,green_fodder_kg,float64,Green fodder fed (kg/day)
+daily_cow_data.csv,dry_fodder_kg,float64,Dry fodder fed (kg/day)
+daily_cow_data.csv,mineral_mix_given,int64,Mineral mixture given that day (0/1)
+daily_cow_data.csv,udder_hygiene_score,int64,Udder cleanliness score 1 (clean) to 4 (very dirty)
+daily_cow_data.csv,pre_milking_wash_done,int64,Pre-milking teat wash done (0/1)
+daily_cow_data.csv,teat_dip_done,int64,Post-milking teat dip done (0/1)
+daily_cow_data.csv,milking_delay_min,int64,Minutes late (+) or early (-) vs scheduled milking time
+daily_cow_data.csv,scc_cells_ml,float64,Somatic cell count (cells/mL) from weekly lab test; blank on non-test days
+daily_cow_data.csv,cmt_score,float64,"California Mastitis Test on test days: 0 neg, 1 trace, 2 (+), 3 (++), 4 (+++); blank otherwise"
+daily_cow_data.csv,antibiotic_given,int64,Antibiotic treatment given that day (0/1)
+daily_cow_data.csv,milk_discard,int64,Milk under withdrawal/discard (0/1)
+daily_cow_data.csv,vet_visit,int64,Veterinarian visit/treatment initiated that day (0/1)
+daily_cow_data.csv,mastitis_status,int64,"Ground truth state: 0 healthy, 1 subclinical (true SCC>200k), 2 clinical"
+daily_cow_data.csv,days_to_clinical,float64,Days until clinical onset (0 = onset day). Blank for cows with no clinical event and after onset
+daily_cow_data.csv,clinical_within_7d,int64,TARGET: clinical onset occurs 1-7 days ahead (0/1)
+daily_cow_data.csv,clinical_within_14d,int64,TARGET: clinical onset occurs 1-14 days ahead (0/1)
+daily_cow_data.csv,forecast_eligible,int64,1 = row valid for forecasting (animal not yet clinical / no prior onset). Filter on this when training
+daily_cow_data.csv,risk_level,int64,"TARGET: 0 No Risk, 1 Low, 2 Moderate, 3 High"
+daily_cow_data.csv,risk_category,str,Text version of risk_level
+cows.csv,cow_id,str,Unique animal ID
+cows.csv,farm_id,str,Farm / herd ID
+cows.csv,species,str,cattle / buffalo
+cows.csv,breed,str,Breed
+cows.csv,age_years,float64,Age (years)
+cows.csv,parity,int64,Lactation number
+cows.csv,calving_date,object,Last calving date
+cows.csv,dim_at_start,int64,Days in milk on day 0
+cows.csv,body_condition_score,float64,BCS 2.0-4.0
+cows.csv,teat_end_score,int64,Teat-end condition 1 (smooth) to 4 (very rough)
+cows.csv,udder_shape,str,bowl / round / pendulous
+cows.csv,previous_mastitis_count,int64,Past mastitis episodes
+cows.csv,days_since_last_mastitis,float64,Days since last episode (blank if none)
+cows.csv,comorbidity,str,Co-existing condition
+cows.csv,vaccination_status,str,up_to_date / partial / none
+farms.csv,farm_id,str,Farm / herd ID
+farms.csv,district,str,District
+farms.csv,state,str,State
+farms.csv,latitude,float64,"Farm latitude (approx., synthetic jitter)"
+farms.csv,longitude,float64,Farm longitude
+farms.csv,farm_type,str,smallholder / cooperative / organized / commercial
+farms.csv,lactating_animals_in_dataset,int64,Animals of this farm in the dataset
+farms.csv,total_herd_strength,int64,Total herd incl. dry and young stock
+farms.csv,milking_system,str,hand / bucket_machine / pipeline
+farms.csv,housing_system,str,tie-stall / loose / free-stall
+farms.csv,floor_type,str,mud / concrete / rubber_mat
+farms.csv,bedding_type,str,none / straw / sand / rubber_mat
+farms.csv,ventilation_cooling,str,natural / fans / fans+sprinklers
+farms.csv,feeding_system,str,separate_feeding / TMR
+farms.csv,farm_hygiene_score,float64,Overall farm hygiene 1 (poor) - 5 (excellent)
+farms.csv,post_milking_teat_dip,int64,Farm practices teat dipping (0/1)
+farms.csv,pre_milking_wash,int64,Farm practices pre-milking wash (0/1)
+farms.csv,dry_cow_therapy,int64,Farm uses dry cow therapy (0/1)
+farms.csv,mineral_mixture_use,int64,Farm uses mineral mixture (0/1)
+farms.csv,water_source,str,borewell / tap / pond
+farms.csv,water_quality_score,int64,Drinking water quality 1-5
+farms.csv,manure_removal_per_day,int64,Times manure removed per day
+farms.csv,milker_hygiene_score,float64,Milker hygiene 1-5
+farms.csv,milker_health_issue,int64,Milker has skin/respiratory/other illness (0/1)
+farms.csv,vet_access,str,rare / on-call / regular
+farm_daily.csv,date,object,Observation date (YYYY-MM-DD)
+farm_daily.csv,farm_id,str,Farm / herd ID
+farm_daily.csv,ambient_temp_c,float64,Daily mean ambient temperature (deg C)
+farm_daily.csv,humidity_pct,float64,Relative humidity (%)
+farm_daily.csv,rainfall_mm,float64,Rainfall (mm)
+farm_daily.csv,thi,float64,Temperature-Humidity Index; >72 = heat stress
+farm_daily.csv,barn_hygiene_score,float64,Daily barn cleanliness 1-5
+farm_daily.csv,bedding_wetness_index,float64,Bedding/floor wetness 0 (dry) - 1 (wet)
+farm_daily.csv,lactating_cows,float64,Animals in herd that day
+farm_daily.csv,avg_milk_yield_l,float64,Herd mean yield (L/cow/day)
+farm_daily.csv,bulk_tank_scc,int64,Milk-weighted herd SCC (cells/mL)
+farm_daily.csv,active_clinical_cases,float64,Cows clinical today
+farm_daily.csv,active_subclinical_cases,float64,Cows subclinical today
+farm_daily.csv,new_clinical_cases,float64,New clinical cases today
+farm_daily.csv,cows_no_risk,float64,Count at No Risk
+farm_daily.csv,cows_low_risk,float64,Count at Low Risk
+farm_daily.csv,cows_moderate_risk,float64,Count at Moderate Risk
+farm_daily.csv,cows_high_risk,float64,Count at High Risk
+farm_daily.csv,antibiotic_treatments,float64,Antibiotic treatments started/ongoing today
+farm_daily.csv,herd_risk_score,float64,0-100 herd risk index (weighted share of at-risk animals)
+farm_daily.csv,herd_risk_category,str,Herd-level category from herd_risk_score
+mastitis_events.csv,event_id,str,Event ID
+mastitis_events.csv,cow_id,str,Unique animal ID
+mastitis_events.csv,farm_id,str,Farm / herd ID
+mastitis_events.csv,event_type,str,clinical / subclinical / chronic_subclinical
+mastitis_events.csv,drift_start_date,object,Date physiological signals began drifting
+mastitis_events.csv,clinical_onset_date,object,Date clinical signs appeared
+mastitis_events.csv,warning_lead_time_days,float64,"Days between drift start and clinical onset (1-3 = sudden onset, 8-14 = typical)"
+mastitis_events.csv,severity,str,mild / moderate / severe (clinical only)
+mastitis_events.csv,quarter_affected,str,LF/RF/LH/RH
+mastitis_events.csv,pathogen_isolated,str,Culture result (synthetic)
+mastitis_events.csv,antibiotic_given_days,int64,Days of antibiotic treatment
+mastitis_events.csv,milk_discard_days,int64,Days milk discarded

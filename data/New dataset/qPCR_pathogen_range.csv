@@ -1,0 +1,305 @@
+Sample;Plate_ID;PCR_date;Dilution_type;Dilution_number;Lab_ID;Pathogen;Quantity;Proportion;CT_value;Control;Select_calibration
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Beta_lacta;+++;NA;18,2;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Beta_lacta;+++;NA;22,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Beta_lacta;++;NA;25,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Beta_lacta;++;NA;26,9;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Beta_lacta;+;NA;30,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Beta_lacta;+;NA;33,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Beta_lacta;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Beta_lacta;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Beta_lacta;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Beta_lacta;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Beta_lacta;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Beta_lacta;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Beta_lacta;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Beta_lacta;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Beta_lacta;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Beta_lacta;+++;NA;24,4;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;C_bovis;++;NA;22;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;C_bovis;++;NA;24,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;C_bovis;++;NA;26,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;C_bovis;+;NA;29,2;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;C_bovis;+;NA;31,8;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;C_bovis;+;NA;35,8;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;C_bovis;+/-;NA;37,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;C_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;C_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;C_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;C_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;C_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;C_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;C_bovis;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;C_bovis;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);C_bovis;++;NA;25,7;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;E_coli;+++;NA;19,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;E_coli;+++;NA;23,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;E_coli;++;NA;26;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;E_coli;++;NA;27,7;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;E_coli;++;NA;30,8;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;E_coli;++;NA;33,7;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;E_coli;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;E_coli;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;E_coli;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;E_coli;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;E_coli;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;E_coli;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;E_coli;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;E_coli;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;E_coli;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);E_coli;++;NA;24,9;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Entero_sp;+++;NA;21,7;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Entero_sp;++;NA;24,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Entero_sp;++;NA;26,2;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Entero_sp;+;NA;29;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Entero_sp;+;NA;31,5;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Entero_sp;+;NA;35,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Entero_sp;+/-;NA;38,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Entero_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Entero_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Entero_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Entero_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Entero_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Entero_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Entero_sp;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Entero_sp;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Entero_sp;++;NA;25,1;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Klebsie_sp;+++;NA;22;NA;No
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Klebsie_sp;+++;NA;22,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Klebsie_sp;++;NA;26,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Klebsie_sp;++;NA;29;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Klebsie_sp;+;NA;32,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Klebsie_sp;+;NA;35,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Klebsie_sp;+/-;NA;39;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Klebsie_sp;+/-;NA;37,9;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Klebsie_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Klebsie_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Klebsie_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Klebsie_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Klebsie_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Klebsie_sp;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Klebsie_sp;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Klebsie_sp;++;NA;26,5;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Myco_bovis;+++;NA;21,5;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Myco_bovis;++;NA;23,9;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Myco_bovis;++;NA;24,9;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Myco_bovis;++;NA;28,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Myco_bovis;++;NA;31;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Myco_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Myco_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Myco_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Myco_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Myco_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Myco_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Myco_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Myco_bovis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Myco_bovis;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Myco_bovis;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Myco_bovis;++;NA;25,1;;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Myco_sp;++;NA;20,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Myco_sp;++;NA;23,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Myco_sp;++;NA;26,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Myco_sp;++;NA;28,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Myco_sp;+;NA;31,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Myco_sp;+;NA;34,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Myco_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Myco_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Myco_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Myco_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Myco_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Myco_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Myco_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Myco_sp;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Myco_sp;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Myco_sp;++;NA;25;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Proto_sp;++;NA;21,5;NA;No
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Proto_sp;++;NA;21,8;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Proto_sp;++;NA;25,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Proto_sp;++;NA;26;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Proto_sp;++;NA;30;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Proto_sp;+;NA;32,9;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Proto_sp;+/-;NA;39,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Proto_sp;+/-;NA;39,7;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Proto_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Proto_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Proto_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Proto_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Proto_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Proto_sp;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Proto_sp;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Proto_sp;++;NA;24,2;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;S_marces;+++;NA;21,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;S_marces;++;NA;24;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;S_marces;++;NA;26,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;S_marces;++;NA;29;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;S_marces;++;NA;31,7;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;S_marces;+;NA;35,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;S_marces;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;S_marces;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;S_marces;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;S_marces;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;S_marces;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;S_marces;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;S_marces;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;S_marces;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;S_marces;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);S_marces;++;NA;25,4;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Staph_aureus;+++;NA;20,8;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Staph_aureus;+++;NA;22,8;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Staph_aureus;++;NA;24;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Staph_aureus;++;NA;27,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Staph_aureus;++;NA;29,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Staph_aureus;+;NA;33,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Staph_aureus;+;NA;36,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Staph_aureus;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Staph_aureus;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Staph_aureus;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Staph_aureus;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Staph_aureus;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Staph_aureus;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Staph_aureus;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Staph_aureus;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Staph_aureus;++;NA;24,3;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Staph_sp;+++;NA;20,8;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Staph_sp;+++;NA;22,7;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Staph_sp;++;NA;25,2;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Staph_sp;++;NA;27,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Staph_sp;++;NA;30,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Staph_sp;+;NA;33,2;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Staph_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Staph_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Staph_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Staph_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Staph_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Staph_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Staph_sp;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Staph_sp;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Staph_sp;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Staph_sp;++;NA;24,1;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Str_agala;+++;NA;21,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Str_agala;+++;NA;23,9;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Str_agala;++;NA;26,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Str_agala;++;NA;28,8;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Str_agala;++;NA;31,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Str_agala;+;NA;34,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Str_agala;+/-;NA;38;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Str_agala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Str_agala;+/-;NA;40;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Str_agala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Str_agala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Str_agala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Str_agala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Str_agala;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Str_agala;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Str_agala;++;NA;25,2;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Str_dysgala;+++;NA;20;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Str_dysgala;++;NA;23,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Str_dysgala;++;NA;26,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Str_dysgala;++;NA;27,9;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Str_dysgala;+;NA;31,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Str_dysgala;+;NA;34,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Str_dysgala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Str_dysgala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Str_dysgala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Str_dysgala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Str_dysgala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Str_dysgala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Str_dysgala;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Str_dysgala;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Str_dysgala;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Str_dysgala;++;NA;25,3;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Str_uberis;++;NA;22,1;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Str_uberis;++;NA;24,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Str_uberis;++;NA;27,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Str_uberis;+;NA;29,9;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Str_uberis;+;NA;33,2;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Str_uberis;+;NA;36,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Str_uberis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Str_uberis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Str_uberis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Str_uberis;+/-;NA;37,7;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Str_uberis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Str_uberis;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Str_uberis;+/-;NA;37,9;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Str_uberis;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Str_uberis;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Str_uberis;++;NA;25,3;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;T_pyo_P_indo;+++;NA;21,2;NA;No
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;T_pyo_P_indo;+++;NA;22,4;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;T_pyo_P_indo;++;NA;25,6;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;T_pyo_P_indo;++;NA;28,2;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;T_pyo_P_indo;+;NA;30,9;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;T_pyo_P_indo;+;NA;35;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;T_pyo_P_indo;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;T_pyo_P_indo;+/-;NA;37,8;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;T_pyo_P_indo;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;T_pyo_P_indo;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;T_pyo_P_indo;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;T_pyo_P_indo;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;T_pyo_P_indo;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;T_pyo_P_indo;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;T_pyo_P_indo;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);T_pyo_P_indo;++;NA;25;NA;No
+Positive_control;Calibration_1;09/10/2023;5;0;Dil_0;Yeasts;++;NA;21,4;NA;No
+Positive_control;Calibration_1;09/10/2023;5;1;Dil_1;Yeasts;++;NA;22;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;2;Dil_2;Yeasts;+;NA;26,3;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;3;Dil_3;Yeasts;+;NA;28;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;4;Dil_4;Yeasts;+;NA;31,8;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;5;Dil_5;Yeasts;+;NA;36,7;NA;Yes
+Positive_control;Calibration_1;09/10/2023;5;6;Dil_6;Yeasts;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;7;Dil_7;Yeasts;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;8;Dil_8;Yeasts;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;9;Dil_9;Yeasts;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;10;Dil_10;Yeasts;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;11;Dil_11;Yeasts;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;12;Dil_12;Yeasts;-;NA;NA;NA;No
+Positive_control;Calibration_1;09/10/2023;5;13;Dil_13;Yeasts;-;NA;NA;NA;No
+Negative_PCR_control;Calibration_1;09/10/2023;NA;NA;PCR Negative Control;Yeasts;-;NA;NA;;No
+Positive_PCR_control;Calibration_1;09/10/2023;NA;NA;ctl PPgamme (10¯¹);Yeasts;+;NA;26,1;;No
+Staph_aureus;Calibration_staph;18/03/2024;10;2;Staph_10-2;Staph_aureus;+++;>99%;15,9;NA;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;3;Staph_10-3;Staph_aureus;+++;>99%;19;NA;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;4;Staph_10-4;Staph_aureus;+++;>99%;21,8;NA;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;5;Staph_10-5;Staph_aureus;++;>99%;25;NA;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;6;Staph_10-6;Staph_aureus;++;>99%;28,4;NA;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;7;Staph_10-7;Staph_aureus;+;NA;30,2;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;8;Staph_10-8;Staph_aureus;+;NA;33,2;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;9;Staph_10-9;Staph_aureus;-;NA; ;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;10;Staph_10-10;Staph_aureus;-;NA; ;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;11;Staph_10-11;Staph_aureus;-;NA; ;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;12;Staph_10-12;Staph_aureus;-;NA; ;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;2;Staph_10-2;Staph_aureus;+;NA;31,2;NA;Yes
+Staph_xylosus;Calibration_staph;18/03/2024;10;3;Staph_10-3;Staph_aureus;+;NA;35,1;NA;Yes
+Staph_xylosus;Calibration_staph;18/03/2024;10;4;Staph_10-4;Staph_aureus;-;NA; ;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;5;Staph_10-5;Staph_aureus;-;NA; ;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;6;Staph_10-6;Staph_aureus;-;NA; ;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;7;Staph_10-7;Staph_aureus;-;NA; ;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;8;Staph_10-8;Staph_aureus;-;NA; ;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;9;Staph_10-9;Staph_aureus;-;NA; ;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;10;Staph_10-10;Staph_aureus;-;NA; ;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;11;Staph_10-11;Staph_aureus;-;NA;;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;12;Staph_10-12;Staph_aureus;-;NA;;NA;No
+Negative_PCR_control;Calibration_staph;18/03/2024;NA;NA;PCR Negative Control;Staph_aureus;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_staph;18/03/2024;NA;NA;ctl_PP118;Staph_aureus;++;NA;24,4;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;2;Staph_10-2;Staph_sp;+++;NA;15,1;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;3;Staph_10-3;Staph_sp;+++;NA;18,1;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;4;Staph_10-4;Staph_sp;+++;NA;21,4;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;5;Staph_10-5;Staph_sp;-;NA; ;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;6;Staph_10-6;Staph_sp;++;NA;27,9;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;7;Staph_10-7;Staph_sp;++;NA;30;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;8;Staph_10-8;Staph_sp;+;NA;33;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_aureus;Calibration_staph;18/03/2024;10;9;Staph_10-9;Staph_sp;-;NA;36,1;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;10;Staph_10-10;Staph_sp;-;NA;38,9;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;11;Staph_10-11;Staph_sp;-;NA;38,2;NA;No
+Staph_aureus;Calibration_staph;18/03/2024;10;12;Staph_10-12;Staph_sp;-;NA; ;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;2;Staph_10-2;Staph_sp;+++;>99%;14,8;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_xylosus;Calibration_staph;18/03/2024;10;3;Staph_10-3;Staph_sp;+++;>99%;17,8;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_xylosus;Calibration_staph;18/03/2024;10;4;Staph_10-4;Staph_sp;+++;NA;20,7;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_xylosus;Calibration_staph;18/03/2024;10;5;Staph_10-5;Staph_sp;+++;NA;23,9;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_xylosus;Calibration_staph;18/03/2024;10;6;Staph_10-6;Staph_sp;++;>99%;27,2;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_xylosus;Calibration_staph;18/03/2024;10;7;Staph_10-7;Staph_sp;++;NA;31;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;Yes
+Staph_xylosus;Calibration_staph;18/03/2024;10;8;Staph_10-8;Staph_sp;+/-;NA;34,1;NA;Yes
+Staph_xylosus;Calibration_staph;18/03/2024;10;9;Staph_10-9;Staph_sp;-;NA;36,7;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;10;Staph_10-10;Staph_sp;-;NA;37,9;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;11;Staph_10-11;Staph_sp;-;NA;39,8;NA;No
+Staph_xylosus;Calibration_staph;18/03/2024;10;12;Staph_10-12;Staph_sp;-;NA;39,6;NA;No
+Negative_PCR_control;Calibration_staph;18/03/2024;NA;NA;PCR Negative Control;Staph_sp;-;NA;NA;NA;No
+Positive_PCR_control;Calibration_staph;18/03/2024;NA;NA;ctl_PP118;Staph_sp;++;NA;24,8;Warning: PCR negative or extraction control is positive for the target and is more than 3 cycles away from the target Ct.;No

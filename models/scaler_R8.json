@@ -1,0 +1,33 @@
+{
+  "features": [
+    "IUFL",
+    "EUFL",
+    "IUFR",
+    "EUFR",
+    "IURL",
+    "EURL",
+    "IURR",
+    "EURR"
+  ],
+  "data_min": [
+    130.0,
+    152.0,
+    130.0,
+    151.0,
+    130.0,
+    152.0,
+    121.0,
+    151.0
+  ],
+  "data_max": [
+    322.0,
+    372.0,
+    343.0,
+    393.0,
+    327.0,
+    372.0,
+    315.0,
+    360.0
+  ],
+  "note": "MinMax fitted on training cows (folds 1-4); inputs clipped to [0,1]"
+}

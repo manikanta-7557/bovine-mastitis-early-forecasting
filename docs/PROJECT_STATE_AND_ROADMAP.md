@@ -1,5 +1,5 @@
 # Project State and Roadmap
-**Interpretable ANFIS for Bovine Mastitis Detection** (Soft Computing, M.Tech, VIT-AP; problem statement SIH26109). Review 1 materials said "early"; that word is no longer supported (claim C5 in `WORKFLOW.md`).
+**Interpretable ANFIS for Bovine Mastitis Detection** (Soft Computing, M.Tech, VIT-AP; problem statement SIH26109). Review 1 materials said "early"; that word is no longer supported (claim C5 in `docs/WORKFLOW.md`).
 Last updated: 2026-10-25, v4 (see the Changelog at the end). Review II is on **Tuesday 2026-10-27**. Owners: A = Manikanta, B = teammate.
 
 ---
@@ -123,7 +123,7 @@ Source: Mendeley Data, "Data for: Clinical Mastitis in Cows based on Udder Param
 | Counts | Number of cows/days not stated | Our counts (1,100 cows x 6 days) come from our own file |
 
 Notes:
-- **cow10** (the only cow whose label changes): Days 1-5 Hardness 1, label 1; Day 6 Hardness 0, label 0 (temperature 43 and Pain 0 throughout; Jersey). Consistent with a label tied to milk appearance, but whether it is real recovery or a recording error cannot be told from the data. **Decision: keep, and log it in `JOURNAL.md`.** One cow of 1,100 (6 of 6,600 rows) cannot move the results.
+- **cow10** (the only cow whose label changes): Days 1-5 Hardness 1, label 1; Day 6 Hardness 0, label 0 (temperature 43 and Pain 0 throughout; Jersey). Consistent with a label tied to milk appearance, but whether it is real recovery or a recording error cannot be told from the data. **Decision: keep, and log it in `docs/JOURNAL.md`.** One cow of 1,100 (6 of 6,600 rows) cannot move the results.
 - Mendeley Data deposits are not peer-reviewed by themselves. The title "Data for: ..." suggests a companion paper. **Not found yet.** One search found only a lead: a 2025 review ([Atlantis Press PDF](https://www.atlantis-press.com/article/126010069.pdf)) lists, as its reference [28], a 2021 paper by Ankitha and Manjaiah, "Comparison of KNN and SVM algorithms to detect clinical mastitis in cows using Internet of Animal Health Things", and says it found SVM (>90%) above KNN (~85%). That is second-hand: do **not** cite it or quote those numbers until someone opens the original. Avoid the phrase "peer-reviewed dataset" until a companion paper is verified.
 
 ## 2c. Review of the external research PDF (2026-10-25)
@@ -167,7 +167,7 @@ A attached `ANFIS_Mastitis_Detection_Research.pdf` (18 pages, written by another
 | Sat night | A | Commit/push repo, add B | B can run all 4 scripts | - |
 | Sat night | A+B | B runs the pipeline; compare `comparison.csv` | Numbers identical on both machines (if not, find why first) | Implementation |
 | Sat night | A | Paste the 5 files listed in section 2 to Claude | Claude has rules + chosen radius | Prelim results |
-| Sun | B | `python audit_odd_cow.py`: the one cow whose label changes | Decision (keep/drop) written in `JOURNAL.md` | Data prep |
+| Sun | B | `python audit_odd_cow.py`: the one cow whose label changes | Decision (keep/drop) written in `docs/JOURNAL.md` | Data prep |
 | Sun | A (+B) | **T0.4 Dataset provenance:** (1) extract the CSV from the Version 2 zip (`unzip Clinical_Mastitis_cows_version2.zip "*.csv" -d v2/`); (2) `python verify_dataset_version.py data/raw/clinical_mastitis_cows.csv v2/<that csv>` must say IDENTICAL; (3) `python compare_versions_deep.py <Version 1 CSV> data/raw/clinical_mastitis_cows.csv` and paste the output to Claude (T0.5); (4) share the working CSV with Claude | Journal line: source + SHA256 + which official file it matches | Data prep |
 | Sun | B | Try to find and open the 2021 KNN-vs-SVM paper (an unverified lead, section 2b); check whether it uses this dataset and defines `I*`/`E*` and the label rule | Verified citation, or a note "not found" | Lit survey, Data prep |
 | Sun | A | Literature table, 6-8 rows: paper, method, black-box or interpretable, gap. Reuse the citations already verified in the Phase I proposal | Every row opened and checked by a human | Lit survey (3) |

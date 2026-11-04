@@ -1,0 +1,12 @@
+Rule 1: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is HIGH AND months_pp_n is LOW AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.86
+Rule 2: IF swelling_index is LOW AND asymmetry_index is LOW AND temperature_n is HIGH AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ -0.39
+Rule 3: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.23
+Rule 4: IF swelling_index is LOW AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is LOW AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.29
+Rule 5: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is HIGH AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.73
+Rule 6: IF swelling_index is LOW AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is HIGH AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.18
+Rule 7: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is YES AND pain is YES THEN risk ~ 0.00
+Rule 8: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is HIGH AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is YES AND pain is YES THEN risk ~ 1.00
+Rule 9: IF swelling_index is HIGH AND asymmetry_index is MEDIUM AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 1.23
+Rule 10: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is MEDIUM AND breed_enc is NO AND hardness is YES AND pain is NO THEN risk ~ 1.00
+Rule 11: IF swelling_index is MEDIUM AND asymmetry_index is HIGH AND temperature_n is HIGH AND months_pp_n is LOW AND breed_enc is NO AND hardness is YES AND pain is YES THEN risk ~ 1.00
+Rule 12: IF swelling_index is HIGH AND asymmetry_index is LOW AND temperature_n is MEDIUM AND months_pp_n is LOW AND breed_enc is NO AND hardness is NO AND pain is NO THEN risk ~ 0.89
