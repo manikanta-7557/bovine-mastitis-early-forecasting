@@ -51,7 +51,7 @@ def get_example_pools(mode):
     return None if d is None else app_core.pick_example_pools(get_bundle(mode), d)
 
 
-UNITS = {"temperature": "dataset scale (unit not documented)", "months_pp": "months after calving", "breed_enc": "0 = Jersey, 1 = Holstein",
+UNITS = {"temperature": "°C", "months_pp": "months after calving", "breed_enc": "0 = Jersey, 1 = Holstein",
          "hardness": "0 = normal, 1 = hard udder", "pain": "0 = no pain, 1 = pain"}
 
 with st.sidebar:

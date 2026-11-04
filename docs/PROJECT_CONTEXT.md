@@ -7,7 +7,7 @@ People: Manikanta Peddi (A, reg. 23MIS7081), Madhur Sathya (B, GitHub AlphaUser2
 ## 2. Data (verified)
 - Working file data/raw/clinical_mastitis_cows.csv: SHA256 e4166166bf83d91a63a62d1ab5e8bd66f9f7ce6687233a67abc4d99918f532d8, 416,118 bytes, 6,600 rows, 1,100 cows x 6 days, 3,961 healthy / 2,639 mastitis (target class1). Match with the official Version 2 zip is still to be verified.
 - Version 1 (data/raw/clinical_mastitis_cows_version1.csv, 5,490 / 1,110) only as a sensitivity check. 1,529 labels differ; cause undocumented.
-- Columns: 8 sensors IUFL EUFL IUFR EUFR IURL EURL IURR EURR (probably inhale/exhale limits of four quarters; not stated explicitly), Temperature (unit undocumented), Hardness, Pain, months postpartum, breed.
+- Columns: 8 sensors IUFL EUFL IUFR EUFR IURL EURL IURR EURR (probably inhale/exhale limits of four quarters; not stated explicitly), Temperature (degrees Celsius; confirmed by the project owner on 4 Nov 2026), Hardness, Pain, months postpartum, breed.
 
 ## 3. Pipeline and files
 data_prep.py -> data/processed/{train,test,full_processed}.csv (fold column, fold 0 = test; StratifiedGroupKFold 5, seed 42, grouped by cow).

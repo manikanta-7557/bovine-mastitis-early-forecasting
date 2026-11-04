@@ -33,7 +33,7 @@ Add:
    data/processed/test.csv; load the file if present, otherwise hide the buttons).
 3. Input validation: sensors between 100 and 400 (show a warning outside the
    training range min/max stored in data_prep_summary.json), months between 1 and 6,
-   temperature range 24 to 58 with a caption "dataset scale, unit not documented".
+   temperature range 24 to 58 in degrees Celsius.
    Warn when a value is clipped to the training range.
 4. Result panel: big risk-tier badge (Low / Watch / High), the clipped score as a
    progress bar, and the raw score in small text.
@@ -65,4 +65,4 @@ After editing, run `python -m py_compile app.py` and fix errors.
 - **Why Streamlit?** Pure Python, so the same ANFIS modules run unchanged; React or Java would need a separate API and add risk without scientific value. Rejected for Review II.
 - **Why keep the scaler in a JSON file?** The app must scale exactly as training did; reading the saved training min/max prevents train/serve mismatch, which we verified numerically.
 - **Why show rules?** It is the project's contribution: a forest gives a score only, ANFIS says which rules fired.
-- **Known limits to state if asked:** the rule text shows each rule's output at its centre, not at the entered cow; inputs outside the training range are clipped; temperature unit is not documented; the model is not clinically validated.
+- **Known limits to state if asked:** the rule text shows each rule's output at its centre, not at the entered cow; inputs outside the training range are clipped; the temperature readings are in degrees Celsius; the model is not clinically validated.

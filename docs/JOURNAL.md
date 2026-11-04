@@ -70,3 +70,8 @@ Add an entry every session: date, who, what you did, what you learned, what is n
 - Generate a varied plain-English veterinary report on each estimate from that record's actual measurements, score and learned-rule contributions; retain the PDF download and mandatory disclaimer.
 - Repeated all three sample buttons in both model modes and verified distinct inputs, in-band scores, matching report text and valid PDF bytes. `test_app_core.py`, `test_explain_report.py`, `test_forecast.py`, and `test_api.py` passed. No model weights, experiment results, or dashboard styling changed.
 - Next: review the updated sample wording and veterinary report.
+
+## 2026-11-04 - Temperature unit label clarification
+- Updated the Streamlit input, React interface, and veterinary report measurement label to degrees Celsius after the project owner confirmed the unit.
+- Updated project context and UI guidance to match. Kept stored temperature measurements, model scaling, and inference unchanged.
+- Passed `test_app_core.py`, `test_explain_report.py`, the frontend production build, and a Streamlit check of the Full-clinical input label.

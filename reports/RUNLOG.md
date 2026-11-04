@@ -17,5 +17,8 @@
 | 2026-11-03 | FC7 selected-day and rule-detail browser check | `3b553ef914472b8c6b7c462c8400867d2cbec0d1` | Browser session (no file generated) | Day 89 showed 14 actual temporal-history rows through the selected day, no future observations, and five expandable model-derived IF–THEN rules. |
 
 | 2026-11-04 | `python -B test_app_core.py`; `python -B test_explain_report.py`; `python -B test_forecast.py`; `python -B test_api.py`; inline Streamlit AppTest (all sample buttons, both models) | `ca33d1005870e513f687030f1a48e3856da67a67` | Test output only (no result artifacts) | Passed inference, distinct score-band sample rotation, randomized prediction-grounded reports, PDF generation, forecast compatibility, and 10 API checks. Full-clinical borderline samples correctly use identified training-fold examples because none meet the band in fold 0. |
+| 2026-11-04 | `python -B test_app_core.py`; `python -B test_explain_report.py`; `npm run build` (from `frontend`); Streamlit AppTest label check | `4ba5110` | `frontend/dist/`; test output only | Passed model/report tests and frontend build; verified °C in the Full-clinical input and veterinary report label. Temperature values and model preprocessing were not changed. |
+
+| 2026-11-04 | Celsius label verification and frontend build on `4ba5110` | `4ba5110` | `frontend/dist/`; test output only | Passed model/report tests and frontend build; verified the Celsius label in the Full-clinical input and veterinary report. Temperature values and model preprocessing were not changed. |
 
 These commands ran against the implementation worktree based on the recorded base commit; no dataset, trained-model, or existing numerical result files were regenerated or overwritten.

@@ -37,7 +37,7 @@ SENSOR_MEANING = {  # the dataset page does not name the columns; I = inhale lim
     "IUFR": "Udder size, inhale limit, front-right quarter", "EUFR": "Udder size, exhale limit, front-right quarter",
     "IURL": "Udder size, inhale limit, rear-left quarter", "EURL": "Udder size, exhale limit, rear-left quarter",
     "IURR": "Udder size, inhale limit, rear-right quarter", "EURR": "Udder size, exhale limit, rear-right quarter",
-    "temperature": "Temperature (dataset scale; unit not documented)", "months_pp": "Months after calving",
+    "temperature": "Temperature (°C)", "months_pp": "Months after calving",
     "breed_enc": "Breed (0 = Jersey, 1 = Holstein)", "hardness": "Udder hardness (0/1)", "pain": "Pain (0/1)",
 }
 _SIGNAL_NAMES = {"milk_conductivity_ms_cm": "Milk conductivity (mS/cm)", "milk_ph": "Milk pH", "milk_yield_l": "Milk yield (litres)", "milk_lactose_pct": "Milk lactose (%)",

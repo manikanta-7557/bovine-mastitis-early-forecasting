@@ -23,7 +23,7 @@ const nav: { id: Screen; label: string; icon: typeof Home }[] = [
 const labels: Record<string, string> = {
   IUFL: "Front-left · inhale", EUFL: "Front-left · exhale", IUFR: "Front-right · inhale", EUFR: "Front-right · exhale",
   IURL: "Rear-left · inhale", EURL: "Rear-left · exhale", IURR: "Rear-right · inhale", EURR: "Rear-right · exhale",
-  temperature: "Temperature (unit not documented)", months_pp: "Months after calving", breed_enc: "Breed (0 / 1)",
+  temperature: "Temperature (°C)", months_pp: "Months after calving", breed_enc: "Breed (0 / 1)",
   hardness: "Udder hardness (0 / 1)", pain: "Pain (0 / 1)",
 };
 const RANGE_NOTE = "Cows in the training data had values in this range. A value outside it is adjusted to the nearest supported limit and flagged because the model has not seen such values during training.";
