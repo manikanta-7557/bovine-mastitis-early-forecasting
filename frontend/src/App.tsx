@@ -23,10 +23,19 @@ const nav: { id: Screen; label: string; icon: typeof Home }[] = [
 const labels: Record<string, string> = {
   IUFL: "Front-left · inhale", EUFL: "Front-left · exhale", IUFR: "Front-right · inhale", EUFR: "Front-right · exhale",
   IURL: "Rear-left · inhale", EURL: "Rear-left · exhale", IURR: "Rear-right · inhale", EURR: "Rear-right · exhale",
-  temperature: "Temperature (dataset scale)", months_pp: "Months after calving", breed_enc: "Breed (0 / 1)",
+  temperature: "Temperature (unit not documented)", months_pp: "Months after calving", breed_enc: "Breed (0 / 1)",
   hardness: "Udder hardness (0 / 1)", pain: "Pain (0 / 1)",
 };
 const RANGE_NOTE = "Cows in the training data had values in this range. A value outside it is adjusted to the nearest supported limit and flagged because the model has not seen such values during training.";
+
+function InfoTip({ text }: { text: string }) {
+  return (
+    <span className="infotip" tabIndex={0} aria-label={text}>
+      <Info size={13} strokeWidth={2} />
+      <span className="infotip-bubble">{text}</span>
+    </span>
+  );
+}
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API}${path}`, {
@@ -208,10 +217,9 @@ function DetectionScreen({ onError, onNavigate }: { onError: (message: string) =
           const range = rangeMap[field];
           return <div className="measurement-field" key={field}><label htmlFor={`measure-${field}`}><span className="field-index">{String(index + 1).padStart(2, "0")}</span>{labels[field] ?? formatName(field)}</label>
             <input id={`measure-${field}`} className="text-input" inputMode="decimal" type="number" step="any" value={values[field] ?? ""} onChange={(event) => setValues((current) => ({ ...current, [field]: event.target.value }))} placeholder="Enter measured value" required />
-            {range && <small className="learned-range">Range the model learned from (lowest to highest): {number(range.low, 2)} – {number(range.high, 2)}</small>}
+            {range && <small className="learned-range">Range the model learned from (lowest to highest): {number(range.low, 2)} – {number(range.high, 2)} <InfoTip text={RANGE_NOTE} /></small>}
           </div>;
         })}</div>
-        <p className="range-note">{RANGE_NOTE}</p>
         <button className="button button-dark submit-button" type="submit" disabled={busy || fields.length === 0}>{busy ? <><span className="spinner" /> Scoring measurements…</> : <>Run model inference <ArrowRight size={16} /></>}</button>
       </form>
       <div className="result-column">

@@ -36,7 +36,8 @@ assert abs(sum(r["weighted_contribution"] for r in an["rules"]) - an["score"]) <
 assert abs(float(b["model"].predict_score(((np.array([vals[c] for c in b["cols"]]) - b["lo"]) / (b["hi"] - b["lo"])).clip(0, 1)[None, :])[0]) - an["score"]) < 1e-9
 rec = [float(x) for x in tr[(tr.day_index <= day) & (tr.day_index > day - 7)].score]
 html = er.report_html(er.build_report(an, dict(case="test", recent=rec))); low = html.lower()
-assert "synthetic" in low and "what the model suggests may happen next" in low and "not a calibrated clinical probability" in low or "not a probability" in low
+assert "computer-generated" in low and "not a clinical result for a real cow" in low and "not a probability" in low
+assert er.MANDATORY_DISCLAIMER in html
 assert not any(w in low for w in ("early warning", "early-warning", "subclinical", "first-ever", "diagnosis:", "treatment recommended"))
 assert er.report_pdf(er.build_report(an, dict(case="test", recent=rec)))[:5] == b"%PDF-"
 # 5. saved results exist and ANFIS has more than one rule in the deployed model

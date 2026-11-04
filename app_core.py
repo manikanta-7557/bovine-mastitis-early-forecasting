@@ -16,12 +16,18 @@ DEFENSE GUIDE
 import json
 from pathlib import Path
 import numpy as np
+import pandas as pd
 from anfis import ANFIS
 from explain import risk_tier, fuzzy_risk
 
 ROOT = Path(__file__).resolve().parent
 MODES = {"Sensor-only": "R8", "Full-clinical": "R13"}
 BINARY = {"breed_enc", "hardness", "pain"}
+EXAMPLE_SCORE_RANGES = {
+    "Healthy cow": (0.0, 0.35),
+    "Mastitis cow": (0.7, 0.9999),
+    "Borderline cow": (0.46, 0.5),
+}
 
 
 def load(mode: str, root: Path = ROOT) -> dict:
@@ -83,3 +89,57 @@ def pick_examples(bundle: dict, df) -> dict:
     h, ms = t.label.values == 0, t.label.values == 1
     return {"Healthy cow (median score)": near(h, np.median(s[h])), "Mastitis cow (median score)": near(ms, np.median(s[ms])),
             "Borderline cow (score near 0.5)": near(h | ms, 0.5)}
+
+
+def pick_example_pools(bundle: dict, df) -> dict[str, list[dict]]:
+    """Return distinct real dataset rows whose scores fit each sample-button range.
+
+    Held-out rows are preferred. A category with no held-out matches falls back to
+    training-fold rows, which callers must identify as illustrative rather than test examples.
+    """
+    if "fold" not in df:
+        raise ValueError("Example rows require the processed dataset's fold column.")
+
+    cols = bundle["cols"]
+    heldout = df[df["fold"] == 0]
+    training = df[df["fold"] != 0]
+
+    def matching_rows(rows: pd.DataFrame, low: float, high: float) -> list[dict]:
+        if rows.empty:
+            return []
+        records = rows.drop_duplicates(subset=cols).copy()
+        scaled = np.asarray([scale(bundle, values)[0] for values in records[cols].to_dict("records")])
+        scores = np.asarray(bundle["model"].predict_score(scaled)).reshape(-1)
+        records = records.assign(_model_score=scores)
+        records = records[records["_model_score"].between(low, high, inclusive="both")]
+        if records.empty:
+            return []
+
+        # Show a different cow before cycling through that cow's other distinct readings.
+        first_per_cow = records.drop_duplicates(subset=["cow_id"]) if "cow_id" in records else records.iloc[:0]
+        remaining = records.drop(index=first_per_cow.index)
+        ordered = pd.concat((first_per_cow, remaining))
+        return [
+            {
+                "row": row.drop(labels="_model_score").to_dict(),
+                "score": float(row["_model_score"]),
+                "held_out": bool(row["fold"] == 0),
+            }
+            for _, row in ordered.iterrows()
+        ]
+
+    pools = {}
+    for name, (low, high) in EXAMPLE_SCORE_RANGES.items():
+        pool = matching_rows(heldout, low, high)
+        if not pool:
+            pool = matching_rows(training, low, high)
+        pools[name] = pool
+    return pools
+
+
+def next_example(pool: list[dict], position: int) -> tuple[dict, int]:
+    """Get the next sample and its cursor, cycling only after the pool is exhausted."""
+    if not pool:
+        raise ValueError("No dataset records have model scores in this sample range.")
+    index = position % len(pool)
+    return pool[index], (index + 1) % len(pool)

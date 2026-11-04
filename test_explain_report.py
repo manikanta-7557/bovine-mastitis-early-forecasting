@@ -18,15 +18,20 @@ for mode in app_core.MODES:
         assert np.allclose(an["mu"].prod(axis=1), raw, rtol=1e-8, atol=0), "membership product != raw firing strength"
         # 3. the score equals the model's own predict_score on the scaled row
         x, _ = app_core.scale(b, vals); assert abs(float(b["model"].predict_score(x[None, :])[0]) - an["score"]) < 1e-9
-        # 4. the report has every section and no banned wording
+        # 4. the veterinary report is plain language, with no technical tables
         blocks = er.build_report(an); html = er.report_html(blocks)
-        heads = [x[1] for x in blocks if x[0] == "h2"]; assert len(heads) == 11 and heads[0].startswith("1.") and heads[-1].startswith("11."), heads
+        heads = [x[1] for x in blocks if x[0] == "h2"]
+        assert {"Model-indicated status", "What may need attention", "Overall health",
+                "Suggested veterinary follow-up", "Important limitation",
+                "Measurements considered", "How the model combined patterns"} <= set(heads), heads
         low = html.lower(); assert not any(w in low for w in BANNED), [w for w in BANNED if w in low]
-        assert "not a calibrated clinical probability" in low and "research prototype" in low
-        assert "Interpretable ANFIS for Detection of Existing Clinical Bovine Mastitis" in html
-        assert "Range the model learned from (lowest to highest)" in html
-        assert "Cows in the training data had values in this range." in html
-        assert "does not include the separate FC7 computer-generated onset study" in html
+        assert er.MANDATORY_DISCLAIMER in html
+        assert "Veterinary explanation: existing clinical mastitis detection" in html
+        assert "Model-indicated status" in html and "Overall health" in html
+        assert "<table" not in low and "firing strength" not in low and "weighted contribution" not in low
+        assert f"{an['score']:.3f}" in html
+        assert all(f"Learned pattern {r['rule']}" in html for r in sorted(an["rules"], key=lambda r: abs(r["weighted_contribution"]), reverse=True)[:2])
+        assert all(block[0] != "table" for block in blocks)
         pdf = er.report_pdf(blocks); assert pdf is None or pdf[:5] == b"%PDF-"
     print(f"OK  {mode}: 3 examples, contributions sum to score, membership product = firing strength, report + PDF built")
 b = app_core.load("Sensor-only"); cols = b["cols"]; ex = app_core.pick_examples(b, df)
@@ -34,13 +39,21 @@ b = app_core.load("Sensor-only"); cols = b["cols"]; ex = app_core.pick_examples(
 h = er.analyse(b, {c: float(ex["Healthy cow (median score)"][c]) for c in cols}); m = er.analyse(b, {c: float(ex["Mastitis cow (median score)"][c]) for c in cols})
 assert h["tier"] == "Low" and m["tier"] == "High", (h["tier"], m["tier"])
 assert "score at or above 0.5 counts as a 'mastitis' output" in " ".join(h["narrative"]["summary"])
+assert er.model_indication(h) == "No strong clinical mastitis pattern indicated by the model."
+assert er.model_indication(m) == "Clinical mastitis pattern indicated by the model."
+borderline = app_core.next_example(app_core.pick_example_pools(b, df)["Borderline cow"], 0)[0]
+assert er.model_indication(er.analyse(b, borderline["row"])) == "The model output is near the classification boundary."
+variants = [er.report_html(er.build_report(h, seed=i)) for i in range(10)]
+assert len(set(variants)) > 1, "reports should vary in wording while describing the same analysis"
+assert all(er.MANDATORY_DISCLAIMER in report for report in variants)
 # 6. weak-activation warning: a cow far from every rule triggers it; text states it is a heuristic
 far = {c: float(b["hi"][i]) for i, c in enumerate(cols)}; far[cols[0]] = float(b["lo"][0])
 a = er.analyse(b, far); assert a["weak"] and "heuristic" in " ".join(a["narrative"]["activation"]).lower()
 # 7. out-of-range input is flagged, clipped and mentioned in report
 oor = {c: float(ex["Healthy cow (median score)"][c]) for c in cols}; oor[cols[0]] = 9999.0
 a = er.analyse(b, oor); assert a["out_of_range"] == [cols[0]] and a["measurements"][0]["seen"] == b["hi"][0] and a["clipped"] in (True, False)
-assert any("Outside the training range" in w for w in a["narrative"]["warnings"]) and "9999" in er.report_html(er.build_report(a))
+assert any("Outside the training range" in w for w in a["narrative"]["warnings"])
+assert "outside the range the model learned from" in er.report_html(er.build_report(a)).lower()
 # 8. Demo navigation: first -> last -> first, clamped at both ends
 import types, sys
 st_stub = types.ModuleType("streamlit"); st_stub.session_state = {}; sys.modules.setdefault("streamlit", st_stub)

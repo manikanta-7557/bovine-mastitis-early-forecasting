@@ -64,3 +64,9 @@ Add an entry every session: date, who, what you did, what you learned, what is n
 - Corrected a contradictory sentence in the clinical score explanation and adjusted rule plots to avoid layout warnings.
 - Ran compile checks, all existing tests, and the new `test_dashboard_ui.py`; all passed. Launched the local Streamlit app, confirmed HTTP 200, and visually inspected all eight workspace pages.
 - Next: review the uncommitted UI changes; no commit or push was made.
+
+## 2026-11-04 - Copilot-assisted veterinary reports and rotating examples
+- Updated the clinical sample buttons to cycle through distinct measured records whose saved-model scores fall inside the requested category bands. Held-out rows are preferred; Full-clinical borderline samples use clearly identified training-fold examples because no matching held-out row exists.
+- Generate a varied plain-English veterinary report on each estimate from that record's actual measurements, score and learned-rule contributions; retain the PDF download and mandatory disclaimer.
+- Repeated all three sample buttons in both model modes and verified distinct inputs, in-band scores, matching report text and valid PDF bytes. `test_app_core.py`, `test_explain_report.py`, `test_forecast.py`, and `test_api.py` passed. No model weights, experiment results, or dashboard styling changed.
+- Next: review the updated sample wording and veterinary report.

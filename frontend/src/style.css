@@ -141,8 +141,11 @@ button { cursor: pointer; }
 .measurement-field label { display: flex; gap: 6px; align-items: center; color: #56645b; font-size: 8px; margin-bottom: 5px; }
 .field-index { color: #9caaa0; font-size: 8px; font-weight: 700; }
 .measurement-field .text-input { height: 32px; }
-.learned-range { display: block; color: #7c8980; font-size: 7px; margin-top: 5px; line-height: 1.5; }
-.range-note { background: #f7f9f7; border-left: 2px solid #81ae8e; padding: 8px 9px; color: #737f76; font-size: 8px; line-height: 1.6; margin: 13px 0; }
+.learned-range { display: flex; align-items: center; gap: 4px; color: #7c8980; font-size: 7px; margin-top: 5px; line-height: 1.5; }
+.infotip { position: relative; display: inline-flex; align-items: center; cursor: pointer; color: #7c8980; flex: 0 0 auto; }
+.infotip-bubble { display: none; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1e3a2a; color: #d8ede0; font-size: 8px; line-height: 1.6; padding: 8px 10px; border-radius: 6px; width: 220px; white-space: normal; z-index: 100; box-shadow: 0 4px 14px rgba(10,25,15,.22); pointer-events: none; }
+.infotip-bubble::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #1e3a2a; }
+.infotip:hover .infotip-bubble, .infotip:focus .infotip-bubble { display: block; }
 .submit-button { width: 100%; height: 38px; }
 .spinner { width: 13px; height: 13px; border: 2px solid rgba(255,255,255,.38); border-top-color: #fff; border-radius: 100%; display: inline-block; animation: spin .7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }

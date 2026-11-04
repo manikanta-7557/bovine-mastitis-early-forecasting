@@ -62,7 +62,6 @@ def p1(c):
     st.markdown("**Problem.** Mastitis is inflammation of the cow's udder. Clinical mastitis shows visible signs and is one of the common health problems in dairy farming. "
                 "Finding affected cows reliably, and explaining why a cow was flagged, supports the veterinarian's decision.")
     st.markdown("**Objective.** Build a model that takes eight udder-sensor measurements and reports (1) a detection score and (2) the fuzzy rules behind it, so a human can check the reasoning.")
-    st.markdown("**Source of the problem.** Smart India Hackathon problem statement SIH26109.")
     ui.callout("<b>Scope.</b> The primary model detects existing clinical mastitis from the measurements it receives. The separate onset section is an isolated demonstration on computer-generated data, not evidence about real animals.")
 
 

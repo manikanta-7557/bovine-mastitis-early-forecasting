@@ -8,7 +8,7 @@ same formulas as anfis.py.
   analyse(bundle, vals)      -> everything the UI needs: per-measurement table, membership matrix, per-rule table,
                                 plain-language narrative (all sentences are built from the numbers, none is canned
                                 clinical text)
-  build_report(an, meta)     -> list of report blocks (heading / paragraph / table / list) in 12 sections
+  build_report(an, meta)     -> short, plain-English veterinary report blocks
   report_html(blocks)        -> standalone, print-ready HTML (A4, "Print / Save as PDF" button)
   report_pdf(blocks)         -> PDF bytes via reportlab (None if reportlab is not installed)
 
@@ -26,8 +26,7 @@ from __future__ import annotations
 
 import html as _html
 import io
-from datetime import datetime
-
+import random
 import numpy as np
 
 import app_core
@@ -44,16 +43,15 @@ SENSOR_MEANING = {  # the dataset page does not name the columns; I = inhale lim
 _SIGNAL_NAMES = {"milk_conductivity_ms_cm": "Milk conductivity (mS/cm)", "milk_ph": "Milk pH", "milk_yield_l": "Milk yield (litres)", "milk_lactose_pct": "Milk lactose (%)",
                  "body_temp_c": "Body temperature (C)", "udder_surface_temp_c": "Udder surface temperature (C)", "rumination_min": "Rumination (min/day)", "activity_steps": "Activity (steps/day)"}
 SENSOR_MEANING.update({f"D_{k}": f"{v}: today minus this cow's own mean of the previous 14 days" for k, v in _SIGNAL_NAMES.items()})
-DISCLAIMER_FC = ("Research prototype built on a SYNTHETIC (computer-generated) farm dataset to demonstrate a seven-day clinical-onset scenario. "
-                 "Nothing here has been validated on real animals or farms. It is not a diagnostic device or a substitute for veterinary examination. "
-                 "The score is a model output for that synthetic dataset, not a probability or clinical finding.")
+MANDATORY_DISCLAIMER = ("This is a research tool that looks for patterns in recorded measurements. "
+                        "It is not a diagnosis or a substitute for veterinary examination.")
+DISCLAIMER_FC = (MANDATORY_DISCLAIMER + " This isolated seven-day scenario uses computer-generated data only; "
+                 "it is not a clinical result for a real cow. The score is not a probability or clinical finding.")
 ACTIVE_SHARE = 0.05      # a rule is called "active" in the report when its firing share is at least 5% (presentation choice)
 NEGLIGIBLE = 5e-4        # contributions smaller than this print as 0.000 at 3 decimals
 THRESHOLD = 0.5          # the score cut used when the model is EVALUATED (F1); not a clinical cut-off
 
-DISCLAIMER = ("Research prototype from an academic soft-computing project. It is not a diagnostic device and not a "
-              "substitute for veterinary examination. It detects patterns associated with existing clinical mastitis "
-              "in one research dataset and has not been validated on farms.")
+DISCLAIMER = MANDATORY_DISCLAIMER
 
 
 # --------------------------------------------------------------------------------------------- analysis
@@ -185,79 +183,127 @@ def exam_points(an: dict) -> list:
     return pts
 
 
-def build_report(an: dict, meta: dict | None = None) -> list:
+def veterinary_summary(an: dict) -> list[tuple[str, str]]:
+    """Return short sections suitable for a veterinary reader without model jargon."""
+    fc = an.get("task") == "forecast"
+    tier = an["tier"]
+    if fc:
+        status = ("In this computer-generated example, the model marked a change for follow-up."
+                  if tier == "Alert" else
+                  "In this computer-generated example, the model did not mark a change for follow-up.")
+        concern = "This result comes from a computer-generated demonstration and does not describe a real cow."
+    else:
+        status = model_indication(an)
+        cautions = []
+        if an["weak"]:
+            cautions.append("The model did not find a close match for these readings, so its result may be less reliable.")
+        if an["out_of_range"]:
+            cautions.append("Some readings were outside the range the model learned from. Please check that they were entered correctly.")
+        if not cautions:
+            if status == "Clinical mastitis pattern indicated by the model.":
+                cautions.append("The pattern is a reason to examine the cow; it is not confirmation of mastitis.")
+            elif status == "The model output is near the classification boundary.":
+                cautions.append("The model result is uncertain, so it should not be used on its own to decide the cow's health.")
+            else:
+                cautions.append("A low model result does not rule out mastitis or another health problem.")
+        concern = " ".join(cautions)
+
+    return [
+        ("Model-indicated status", status),
+        ("What may need attention", concern),
+        ("Overall health", "This tool does not assess the cow's overall health and cannot confirm or rule out disease."),
+        ("Suggested veterinary follow-up",
+         "Examine the udder and milk, assess the cow's general condition, and use any further checks you consider appropriate."),
+        ("Important limitation",
+         "This is a research tool that looks for patterns in recorded measurements. It is not a diagnosis or a substitute for veterinary examination."),
+    ]
+
+
+def model_indication(an: dict) -> str:
+    """Translate a model result into the cautious wording used in veterinary reports."""
+    if an.get("task") == "forecast":
+        return ("The synthetic model marked a change for follow-up."
+                if an["tier"] == "Alert" else
+                "The synthetic model did not mark a change for follow-up.")
+    score = float(an["score"])
+    if 0.0 <= score <= 0.35:
+        return "No strong clinical mastitis pattern indicated by the model."
+    if 0.46 <= score <= 0.5:
+        return "The model output is near the classification boundary."
+    if 0.7 <= score <= 0.9999:
+        return "Clinical mastitis pattern indicated by the model."
+    return {
+        "Low": "No strong clinical mastitis pattern indicated by the model.",
+        "High": "Clinical mastitis pattern indicated by the model.",
+        "Watch": "The model output is near the classification boundary.",
+    }.get(an["tier"], "The model could not provide a clear result for these readings.")
+
+
+def build_report(an: dict, meta: dict | None = None, seed: int | None = None) -> list:
+    """Build a varied, plain-English report from this analysis and its actual model outputs."""
     meta = meta or {}
-    when = meta.get("when") or datetime.now().strftime("%d %b %Y, %H:%M")
-    n = an["narrative"]; rules = an["rules"]; cols = an["cols"]
-    fc = an.get("task") == "forecast"; DIS = DISCLAIMER_FC if fc else DISCLAIMER
-    B = [("h1", "Interpretable ANFIS for Detection of Existing Clinical Bovine Mastitis"),
-         ("p", "Synthetic 7-day onset scenario explanation" if fc else "Detailed model explanation for veterinary review"),
-         ("note", DIS),
-         ("kv", [("Model", f"{an['bundle_mode']} ANFIS ({an['key']}), {an['out']['n_rules']} learned rules"), ("Generated", when)]
-          + ([("Question answered", "Will clinical mastitis start within the next 7 days? (synthetic data)")] if fc else [])
-          + ([("Case", meta["case"])] if meta.get("case") else []))]
-    if not fc:
-        B.append(("p", "This report covers existing clinical-status detection with the selected R8/R13 model. It does not include the separate FC7 computer-generated onset study; those study results are not real-farm validation."))
-    B += [("h2", "1. Cow measurements" + (" used (change from the cow's own recent baseline)" if fc else " entered")),
-          ("p", "Range the model learned from (lowest to highest). Cows in the training data had values in this range. A value outside it is adjusted to the nearest supported limit and flagged because the model has not seen such values during training."),
-          ("table", ["Measurement", "Meaning", "Entered value", "Value used by model", "Range the model learned from (lowest to highest)", "Range status"],
-           [[m["feature"], m["meaning"], f"{m['entered']:g}", f"{m['seen']:g}", f"{m['lo']:g} to {m['hi']:g}",
-             "Inside learned range" if m["in_range"] else "Outside range - adjusted"] for m in an["measurements"]])]
-    B += [("h2", "2. Model result and score"),
-          ("table", ["Item", "Value"],
-           [["Raw model score", f"{an['score']:.3f}"], ["Displayed score (clipped to 0-1)", f"{an['score_clipped']:.3f}"],
-            ["Presentation category" if not fc else "Alert status", f"{an['tier']} (not a clinically validated threshold)" if not fc else f"{an['tier']} (alert threshold {an['alert_threshold']:.3f}, tuned on validation data)"],
-            ["Weak-match check (heuristic)", "Weak match flagged" if an["weak"] else "Not flagged"]]),
-          ("p", "The score is the model's output. It is not a calibrated clinical probability.")]
-    B += [("h2", "3. Interpretation of the result")] + [("p", s) for s in n["summary"]]
-    B += [("h2", "4. Measurement-wise comparison with learned rule centres"),
-          ("p", f"Each row compares the entered value with the centre of the dominant rule (Rule {an['dominant']}) and with the rule whose centre is closest for that measurement. "
-                "Membership is exp(-0.5 x ((value - centre) / width)^2): 1 at the centre, falling towards 0 with distance. No clinical reference ranges are implied."),
-          ("table", ["Measurement", "Entered", f"Rule {an['dominant']} centre (+- width)", "Difference", "Membership", "Closest rule", "Its centre", "Membership"],
-           [[m["feature"], f"{m['entered']:g}", f"{_n(m['dom_centre'])} (+-{_n(m['dom_width'])})", f"{_n(m['dom_diff'], True)}", f"{m['dom_mu']:.2f}",
-             f"Rule {m['best_rule']}", f"{_n(m['best_centre'])}", f"{m['best_mu']:.2f}"] for m in an["measurements"]])]
-    B += [("h2", "5. Active ANFIS rules"),
-          ("p", f"Rules with a firing share of at least {ACTIVE_SHARE:.0%} are called active here (a presentation choice). Active rules: "
-                + ", ".join(f"Rule {a}" for a in an["active"]) + ".")]
-    for a in an["active"]:
-        i = a - 1; r = next(rr for rr in rules if rr["rule"] == a)
-        B.append(("table", [f"Rule {a}: measurement", "Centre (+- width)", "Entered", "Membership"],
-                  [[cols[j], f"{_n(an['centre'][i, j])} (+-{_n(an['width'][i, j])})", f"{an['entered'][j]:g}", f"{an['mu'][i, j]:.2f}"] for j in range(len(cols))]))
-        B.append(("p", f"Rule {a}: raw firing strength {r['raw_firing']:.2e}, firing share {r['firing_share']:.1%}, linear output for this cow {r['rule_output_for_this_cow']:.3f}."))
-    B += [("h2", "6. Rule firing-strength analysis")] + [("p", s) for s in n["activation"]]
-    B.append(("table", ["Rule", "Raw firing strength", "Firing share"],
-              [[f"Rule {r['rule']}", f"{r['raw_firing']:.2e}", f"{r['firing_share']:.2%}"] for r in rules]))
-    B += [("h2", "7. Rule outputs and weighted contributions"),
-          ("p", "Contribution of rule i = (firing share of rule i) x (output of rule i for this cow). Final raw score = sum of all contributions. "
-                "Each rule output is a linear estimate and may be below 0 or above 1 in this type of model (first-order Sugeno)."),
-          ("table", ["Rule", "Firing share", "Rule output (this cow)", "Contribution"],
-           [[f"Rule {r['rule']}", f"{r['firing_share']:.3f}", f"{r['rule_output_for_this_cow']:.3f}", f"{r['weighted_contribution']:+.3f}"] for r in rules]
-           + [["Sum (raw score)", "", "", f"{an['score']:+.3f}"]])]
-    B += [("h2", "8. How the final score was obtained")] + [("p", s) for s in n["contributions"]] + [("p", s) for s in n["closeness"]]
-    if fc and meta.get("recent"):
-        rs = meta["recent"]
-        B += [("h2", "What the model suggests may happen next"),
-              ("p", f"Scenario scores for the last {len(rs)} days: " + ", ".join(f"{x:.2f}" for x in rs) + f" (alert threshold {an['alert_threshold']:.2f}). "
-                    + ("The score has been rising." if rs[-1] > rs[0] + 0.05 else ("The score has been falling." if rs[-1] < rs[0] - 0.05 else "The score has been roughly stable.")) + " "
-                    + ("An alert is active: the model considers onset within 7 days more likely than for cows without an alert, in the synthetic data." if an["tier"] == "Alert"
-                       else "No alert is active today."))]
-    B += [("h2", "9. Important model warnings and limitations")]
-    w = list(n["warnings"]) + (n["activation"][:1] if an["weak"] else [])
-    B.append(("ul", w + ([
-        "Built and tested only on computer-generated data. Results describe this synthetic scenario only and do not show real-farm performance.",
-        "Cow-grouped cross-validation was used; the alert threshold was tuned on validation cows, never on test cows.",
-        "The score is not a probability; alert status is not a diagnosis. No external or real-farm validation.",
-        "Learned rules describe patterns in the synthetic data and have not been reviewed by a veterinary expert."] if fc else [
-        "Trained on the project's working clinical mastitis dataset associated with Mendeley record kbvcdw5b4m; Version 2 provenance is pending archive-level verification.",
-        "No external farm validation. Performance numbers come from one research dataset (1,100 cows) evaluated with cow-grouped cross-validation.",
-        "Low / Watch / High are presentation categories on the model score, not clinical thresholds.",
-        "This detection report describes existing clinical mastitis patterns in the working research dataset.",
-        "Learned rules describe patterns in the training data; they have not been reviewed by a veterinary expert."])))
-    B += [("h2", "10. Suggested points for veterinary examination"),
-          ("p", "General points for professional verification only. This report gives no diagnosis, treatment or medication advice."),
-          ("ul", exam_points(an))]
-    B += [("h2", "11. Closing disclaimer"), ("note", DIS)]
-    return B
+    rng = random.Random(seed)
+    sections = veterinary_summary(an)
+    if an.get("task") == "forecast":
+        title = "Computer-generated example: veterinary explanation"
+        intro = ("This is an isolated software demonstration using computer-generated data. "
+                 "It is not a clinical result for a real cow.")
+        disclaimer = DISCLAIMER_FC
+    else:
+        title = "Veterinary explanation: existing clinical mastitis detection"
+        intro = rng.choice((
+            "This report summarizes how the model interpreted the measurements entered for this cow.",
+            "The following explanation is based on this cow's entered measurements and the saved model output.",
+            "This veterinary-facing summary describes the model result for the measurements entered in this assessment.",
+        ))
+        disclaimer = DISCLAIMER
+    blocks = [("h1", title), ("p", intro)]
+    if meta.get("case"):
+        blocks.append(("p", f"Record: {meta['case']}"))
+    if meta.get("record_note"):
+        blocks.append(("p", f"Record source: {meta['record_note']}."))
+    for heading, text in sections:
+        if heading == "Model-indicated status":
+            text = (f"{text} The ANFIS score was {an['score']:.3f}"
+                    + (f" (displayed as {an['score_clipped']:.3f} after clipping)." if an["clipped"] else ".")
+                    + " This score is not a calibrated probability.")
+        if heading == "What may need attention" and an.get("task") != "forecast":
+            if an["weak"]:
+                text += " The model's learned patterns did not closely match this set of readings."
+            if an["out_of_range"]:
+                text += " Out-of-range measurements were clipped before scoring."
+        blocks.extend((("h2", heading), ("p", text)))
+
+    measurements = sorted(an["measurements"], key=lambda item: item["dom_mu"], reverse=True)
+    if measurements:
+        closest = measurements[:2]
+        farthest = min(measurements, key=lambda item: item["dom_mu"])
+        detail = rng.choice((
+            "Within the leading learned pattern, {a} ({av:g}) and {b} ({bv:g}) were the closest-matching entered measurements; {c} ({cv:g}) was less similar.",
+            "The strongest pattern match was closest on {a} ({av:g}) and {b} ({bv:g}). The entered {c} value ({cv:g}) matched that pattern less closely.",
+            "For the leading learned pattern, {a} ({av:g}) and {b} ({bv:g}) aligned most closely, while {c} ({cv:g}) was a weaker match.",
+        )).format(a=closest[0]["feature"], av=closest[0]["entered"],
+                 b=closest[-1]["feature"], bv=closest[-1]["entered"],
+                 c=farthest["feature"], cv=farthest["entered"])
+        blocks.extend((("h2", "Measurements considered"), ("p", detail),
+                       ("p", "These are comparisons with learned model patterns, not veterinary reference ranges or findings about the animal.")))
+
+    important_rules = sorted(an["rules"], key=lambda rule: abs(rule["weighted_contribution"]), reverse=True)[:2]
+    if important_rules:
+        rule_details = [
+            f"Learned pattern {rule['rule']} matched {rule['firing_share']:.1%} of the model's combined pattern weight; "
+            f"its output was {rule['rule_output_for_this_cow']:.3f} and its contribution was {rule['weighted_contribution']:+.3f}."
+            for rule in important_rules
+        ]
+        explanation = rng.choice((
+            "The model combined its learned patterns as follows: ",
+            "The main learned-pattern contributions to this result were: ",
+            "The result reflects the following strongest learned-pattern contributions: ",
+        )) + " ".join(rule_details) + f" Together, all rule contributions produced the score {an['score']:.3f}."
+        blocks.extend((("h2", "How the model combined patterns"), ("p", explanation),
+                       ("p", "These are model calculations, not separate tests or clinical observations.")))
+    blocks.append(("note", disclaimer))
+    return blocks
 
 
 # --------------------------------------------------------------------------------------------- renderers
